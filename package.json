@@ -1,0 +1,8 @@
+{
+  "name": "OLSKSpec",
+  "main": "main.js",
+  "dependencies": {
+  	"OLSKDisk": "olsk/OLSKDisk",
+  	"glob": "latest"
+  }
+}
