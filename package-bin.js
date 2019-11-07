@@ -23,7 +23,25 @@ const mod = {
 	},
 
 	CommandUITests(args) {
-		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd());
+		let pattern = args.filter(function (e) {
+			return e.match(/^-?-?olsk-match=(.+)/i)
+		}).shift();
+
+		if (pattern) {
+			args.splice(args.indexOf(pattern))
+
+			pattern = pattern.match(/^-?-?olsk-match=(.+)/i)[1]
+
+			const regex = pattern.match(/^\/(.+)\/(.+)?$/);
+
+			if (regex) {
+				pattern = new RegExp(regex[1], regex[2]);
+			};
+		};
+
+		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd()).filter(function (e) {
+			return pattern ? e.match(pattern) : true;
+		});
 		const sourcePaths = OLSKSpec.OLSKSpecUISourcePaths(process.cwd());
 
 		require('child_process').spawn('supervisor', [].concat.apply([], [
