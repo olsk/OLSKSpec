@@ -23,6 +23,40 @@ const mod = {
 	},
 
 	CommandUITests(args) {
+		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd());
+		const sourcePaths = OLSKSpec.OLSKSpecUISourcePaths(process.cwd());
+
+		require('child_process').spawn('supervisor', [].concat.apply([], [
+			'--watch', sourcePaths.concat(testPaths).join(','),
+			'--extensions', sourcePaths.concat(testPaths).reduce(function (coll, item) {
+				const ext = require('path').extname(item).split('.').pop();
+
+				if (!coll.includes(ext)) {
+					coll.push(ext);
+				};
+				
+				return coll;
+			}, []).join(','),
+			'--no-restart-on', 'exit',
+			'--quiet',
+			'--exec', 'mocha',
+
+			'--',
+
+			testPaths,
+			'--file', require('path').join(__dirname, 'mocha-start.js'),
+			'--timeout', '1000',
+
+			args.length
+			? args
+			: ['--reporter', 'min'],
+
+			]), {
+				stdio: 'inherit',
+				env: Object.assign({
+					OLSK_TESTING_BEHAVIOUR: true,
+				}, process.env),
+			});
 	},
 
 	// LIFECYCLE
