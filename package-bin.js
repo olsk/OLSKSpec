@@ -12,6 +12,7 @@ const mod = {
 			'--exclude', '**/+(node_modules|__*)/**',
 			'--watch',
 			'--file', require('path').join(__dirname, 'mocha-start.js'),
+			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
 
 			process.argv.slice(2).length
 			? process.argv.slice(2)
@@ -63,6 +64,7 @@ const mod = {
 
 			testPaths,
 			'--file', require('path').join(__dirname, 'mocha-start.js'),
+			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
 			'--timeout', '1000',
 
 			args.length
