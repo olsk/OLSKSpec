@@ -1,8 +1,13 @@
 {
   "name": "OLSKSpec",
   "main": "main.js",
+  "bin": {
+    "olsk-spec": "./package-bin.js",
+    "olsk-spec-logic": "./package-bin.js",
+    "olsk-spec-ui": "./package-bin.js"
+  },
   "dependencies": {
-  	"OLSKDisk": "olsk/OLSKDisk",
-  	"glob": "latest"
+    "OLSKDisk": "olsk/OLSKDisk",
+    "glob": "latest"
   }
 }
