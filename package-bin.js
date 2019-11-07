@@ -7,11 +7,15 @@ const mod = {
 	// COMMAND
 
 	CommandLogicTests() {
-		require('child_process').spawn('mocha', [
+		require('child_process').spawn('mocha', [].concat.apply([], [
 			'**/*-tests.js',
 			'--exclude', '**/+(node_modules|__*)/**',
 			'--watch',
-			].concat(process.argv.slice(2).length ? process.argv.slice(2) : ['--reporter', 'min']), {
+			process.argv.slice(2).length
+			? process.argv.slice(2)
+			: ['--reporter', 'min'],
+			'--file', require('path').join(__dirname, 'mocha-start.js'),
+			]), {
 				stdio: 'inherit'
 			});
 	},
