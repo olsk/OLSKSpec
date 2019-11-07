@@ -21,7 +21,7 @@ const mod = {
 		});
 	},
 
-	OLSKSpecLogicSourcePaths (inputData) {
+	OLSKSpecUISourcePaths (inputData) {
 		if (typeof inputData !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -30,9 +30,12 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return mod._OLSKSpecUITestPaths(inputData).map(function (e) {
-			return e.replace(/-tests/i, '');
-		}).filter(require('OLSKDisk').OLSKDiskIsRealFilePath);
+		return require('glob').sync('**/+(ui-behaviour.js|view.ejs|*.md)', {
+			cwd: inputData,
+			realpath: true,
+		}).filter(function (e) {
+			return !e.match(require('OLSKDisk').OLSKDiskStandardIgnorePattern());
+		});
 	},
 	
 };

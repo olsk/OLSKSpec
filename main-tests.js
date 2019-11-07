@@ -35,61 +35,61 @@ describe('OLSKSpecUITestPaths', function testOLSKSpecUITestPaths() {
 	});
 
 	it('includes if in subfolder', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('foxtrot')), [
-			uPath('foxtrot/alfa/ui-test-alfa.js'),
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('echo')), [
+			uPath('echo/alfa/ui-test-alfa.js'),
 			]);
 	});
 
 	it('excludes if in standard ignore', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('golf')), []);
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('foxtrot')), []);
 	});
 
 });
 
-describe('OLSKSpecLogicSourcePaths', function testOLSKSpecLogicSourcePaths() {
+describe('OLSKSpecUISourcePaths', function testOLSKSpecUISourcePaths() {
 
 	it('throws if not string', function() {
 		throws(function() {
-			mainModule.OLSKSpecLogicSourcePaths(null);
+			mainModule.OLSKSpecUISourcePaths(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if not real directory', function() {
 		throws(function() {
-			mainModule.OLSKSpecLogicSourcePaths(uPath('alf'));
+			mainModule.OLSKSpecUISourcePaths(uPath('alf'));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('alfa')), []);
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('alfa')), []);
 	});
 
-	it('excludes if not formatted', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('bravo')), []);
-	});
-
-	it('excludes if source not real file', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('charlie')), []);
-	});
-
-	it('includes if source real file', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('delta')), [
-			uPath('delta/alfa.js'),
+	it('includes ui-behaviour.js', function() {
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('charlie')), [
+			uPath('charlie/ui-behaviour.js'),
 			]);
 	});
 
-	it('excludes if style', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('echo')), []);
-	});
-
 	it('includes if in subfolder', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('foxtrot')), [
-			uPath('foxtrot/alfa/alfa.js'),
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('echo')), [
+			uPath('echo/alfa/ui-behaviour.js'),
 			]);
 	});
 
 	it('excludes if in standard ignore', function() {
-		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('golf')), []);
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('foxtrot')), []);
+	});
+
+	it('includes view.ejs', function() {
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('golf')), [
+			uPath('golf/view.ejs'),
+			]);
+	});
+
+	it('includes *.md', function() {
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('hotel')), [
+			uPath('hotel/alfa.md'),
+			]);
 	});
 
 });
