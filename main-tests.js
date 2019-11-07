@@ -6,42 +6,42 @@ const uPath = function (inputData) {
 	return require('path').join(__dirname, 'stubs', inputData)
 }
 
-describe('OLSKSpecLogicTestPaths', function testOLSKSpecLogicTestPaths() {
+describe('OLSKSpecUITestPaths', function testOLSKSpecUITestPaths() {
 
 	it('throws if not string', function() {
 		throws(function() {
-			mainModule.OLSKSpecLogicTestPaths(null);
+			mainModule.OLSKSpecUITestPaths(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if not real directory', function() {
 		throws(function() {
-			mainModule.OLSKSpecLogicTestPaths(uPath('alf'));
+			mainModule.OLSKSpecUITestPaths(uPath('alf'));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKSpecLogicTestPaths(uPath('alfa')), []);
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('alfa')), []);
 	});
 
 	it('excludes if not formatted', function() {
-		deepEqual(mainModule.OLSKSpecLogicTestPaths(uPath('bravo')), []);
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('bravo')), []);
 	});
 
 	it('includes if formatted', function() {
-		deepEqual(mainModule.OLSKSpecLogicTestPaths(uPath('charlie')), [
-			uPath('charlie/alfa-tests.js'),
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('charlie')), [
+			uPath('charlie/ui-test-alfa.js'),
 			]);
 	});
 
 	it('includes if in subfolder', function() {
 		deepEqual(mainModule.OLSKSpecLogicSourcePaths(uPath('foxtrot')), [
-			uPath('foxtrot/alfa/alfa.js'),
+			uPath('foxtrot/alfa/ui-test-alfa.js'),
 			]);
 	});
 
 	it('excludes if in standard ignore', function() {
-		deepEqual(mainModule.OLSKSpecLogicTestPaths(uPath('golf')), []);
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('golf')), []);
 	});
 
 });
@@ -65,7 +65,7 @@ describe('OLSKSpecLogicSourcePaths', function testOLSKSpecLogicSourcePaths() {
 	});
 
 	it('excludes if not formatted', function() {
-		deepEqual(mainModule.OLSKSpecLogicTestPaths(uPath('bravo')), []);
+		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('bravo')), []);
 	});
 
 	it('excludes if source not real file', function() {

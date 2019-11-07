@@ -1,6 +1,6 @@
 const mod = {
 
-	OLSKSpecLogicTestPaths (inputData) {
+	OLSKSpecUITestPaths (inputData) {
 		if (typeof inputData !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');
 		}
@@ -9,11 +9,11 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return mod._OLSKSpecLogicTestPaths(inputData);
+		return mod._OLSKSpecUITestPaths(inputData);
 	},
 
-	_OLSKSpecLogicTestPaths (inputData) {
-		return require('glob').sync('**/*-tests.js', {
+	_OLSKSpecUITestPaths (inputData) {
+		return require('glob').sync('**/ui-test-*.js', {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
@@ -30,7 +30,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return mod._OLSKSpecLogicTestPaths(inputData).map(function (e) {
+		return mod._OLSKSpecUITestPaths(inputData).map(function (e) {
 			return e.replace(/-tests/i, '');
 		}).filter(require('OLSKDisk').OLSKDiskIsRealFilePath);
 	},
