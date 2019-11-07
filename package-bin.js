@@ -22,18 +22,18 @@ const mod = {
 			});
 	},
 
-	CommandUITests() {
+	CommandUITests(args) {
 	},
 
 	// LIFECYCLE
 
 	LifecycleScriptDidLoad() {
 		if (process.argv[1].endsWith('olsk-spec-ui')) {
-			return mod.CommandUITests();
+			return mod.CommandUITests(process.argv.slice(2));
 		};
 
 		if (process.argv[1].endsWith('olsk-spec') && process.argv[2] === 'ui') {
-			return mod.CommandUITests();
+			return mod.CommandUITests(process.argv.slice(3));
 		};
 
 		mod.CommandLogicTests();
