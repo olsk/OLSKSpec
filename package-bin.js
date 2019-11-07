@@ -82,6 +82,8 @@ const mod = {
 	// LIFECYCLE
 
 	LifecycleScriptDidLoad() {
+		require('dotenv').config();
+		
 		if (process.argv[1].endsWith('olsk-spec-ui')) {
 			return mod.CommandUITests(process.argv.slice(2));
 		};

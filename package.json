@@ -11,6 +11,9 @@
     "OLSKDisk": "olsk/OLSKDisk",
     "glob": "latest",
 
+    "// .ENV": null,
+    "dotenv": "latest",
+
     "// I sacrifice myself for the commas of others": null
   }
 }
