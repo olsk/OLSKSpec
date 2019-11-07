@@ -5,7 +5,7 @@
 
 	const Browser = require('zombie');
 
-	Browser.localhost('loc.tests', 3001);
+	Browser.localhost('loc.tests', process.env.PORT || 3000);
 	
 	require('OLSKTesting')._OLSKTestingZombieExtend(Browser);
 
