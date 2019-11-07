@@ -9,10 +9,6 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return mod._OLSKSpecUITestPaths(inputData);
-	},
-
-	_OLSKSpecUITestPaths (inputData) {
 		return require('glob').sync('**/ui-test-*.js', {
 			cwd: inputData,
 			realpath: true,
