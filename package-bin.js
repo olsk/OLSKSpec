@@ -11,10 +11,12 @@ const mod = {
 			'**/*-tests.js',
 			'--exclude', '**/+(node_modules|__*)/**',
 			'--watch',
+			'--file', require('path').join(__dirname, 'mocha-start.js'),
+
 			process.argv.slice(2).length
 			? process.argv.slice(2)
 			: ['--reporter', 'min'],
-			'--file', require('path').join(__dirname, 'mocha-start.js'),
+
 			]), {
 				stdio: 'inherit'
 			});
