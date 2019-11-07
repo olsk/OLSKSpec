@@ -1,6 +1,13 @@
 (function OLSKMochaPreprocess() {
 	const fs = require('fs');
-	const oldRequire = require('olsk-rollup-plugin-localize')()._OLSKRollupI18NReplaceInternationalizationToken;
+	let oldRequire;
+
+	try {
+	  oldRequire = require('olsk-rollup-plugin-localize')()._OLSKRollupI18NReplaceInternationalizationToken;
+	} catch (e) {
+		return;
+	}
+	
 	const replaceFunctions = [
 		require('OLSKTesting')._OLSKTestingMochaReplaceES6Import,
 		function (inputData) {
