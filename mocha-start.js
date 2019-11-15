@@ -52,6 +52,10 @@ let languageDictionary = {};
 	global.OLSKTestingCanonicalFor = function() {
 		return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
 	};
+
+	global.OLSKTestingCanonical = function(routeObject, params) {
+		return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
+	};
 })();
 
 (function OLSKMochaPreprocess() {
