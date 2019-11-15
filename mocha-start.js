@@ -49,8 +49,8 @@ let languageDictionary = {};
 		return;
 	}
 
-	global.OLSKTestingCanonicalFor = function(param1, optionalParams) {
-		return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(param1, optionalParams);
+	global.OLSKTestingCanonicalFor = function() {
+		return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
 	};
 })();
 
