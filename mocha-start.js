@@ -63,7 +63,7 @@ let languageDictionary = {};
 	let oldRequire;
 
 	try {
-	  oldRequire = require('olsk-rollup-plugin-localize')()._OLSKRollupI18NReplaceInternationalizationToken;
+	  oldRequire = require('OLSKRollupPluginLocalize')()._OLSKRollupLocalizeReplaceInternationalizationToken;
 	} catch (e) {
 		return;
 	}
