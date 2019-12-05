@@ -26,7 +26,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return require('glob').sync('**/+(ui-behaviour.js|view.ejs|*.md)', {
+		return require('glob').sync('**/+(ui-behaviour.js|*view.ejs|*.md)', {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
