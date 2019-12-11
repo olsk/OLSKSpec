@@ -92,4 +92,10 @@ describe('OLSKSpecUISourcePaths', function testOLSKSpecUISourcePaths() {
 			]);
 	});
 
+	it('includes __compiled', function() {
+		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('indigo')), [
+			uPath('indigo/__compiled/ui-behaviour.js'),
+			]);
+	});
+
 });

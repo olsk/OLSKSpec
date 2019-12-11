@@ -30,6 +30,10 @@ const mod = {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
+			if (e.match('__compiled')) {
+				return true;
+			}
+			
 			return !e.match(require('OLSKDisk').OLSKDiskStandardIgnorePattern());
 		});
 	},
