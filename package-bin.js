@@ -4,9 +4,9 @@ const OLSKSpec = require('./main.js');
 
 const mod = {
 
-	// COMMAND
+	// CONTROL
 
-	CommandLogicTests() {
+	ControlLogicTests() {
 		require('child_process').spawn('mocha', [].concat.apply([], [
 			'**/*-tests.js',
 			'--exclude', '**/+(node_modules|__*)/**',
@@ -23,7 +23,7 @@ const mod = {
 			});
 	},
 
-	CommandUITests(args) {
+	ControlUITests(args) {
 		let pattern = args.filter(function (e) {
 			return e.match(/^-?-?olsk-match=(.+)/i)
 		}).shift();
@@ -85,14 +85,14 @@ const mod = {
 		require('dotenv').config();
 		
 		if (process.argv[1].endsWith('olsk-spec-ui')) {
-			return mod.CommandUITests(process.argv.slice(2));
+			return mod.ControlUITests(process.argv.slice(2));
 		};
 
 		if (process.argv[1].endsWith('olsk-spec') && process.argv[2] === 'ui') {
-			return mod.CommandUITests(process.argv.slice(3));
+			return mod.ControlUITests(process.argv.slice(3));
 		};
 
-		mod.CommandLogicTests();
+		mod.ControlLogicTests();
 	},
 
 };
