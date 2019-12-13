@@ -158,7 +158,7 @@ const mod = {
 		};
 		
 		Browser.prototype.OLSKVisit = function(routeObject, params) {
-			return this.visit(global.OLSKTestingCanonicalFor(routeObject.OLSKRoutePath, params))
+			return this.visit(global.OLSKTestingCanonical(routeObject, params))
 		};
 
 		Browser.extend(function(browser) {
