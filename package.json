@@ -12,6 +12,9 @@
     "OLSKDisk": "olsk/OLSKDisk",
     "glob": "latest",
 
+    "// INTERNATIONAL": null,
+    "OLSKInternational": "olsk/OLSKInternational",
+
     "// .ENV": null,
     "dotenv": "latest",
 

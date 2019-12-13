@@ -1,5 +1,9 @@
 const mod = {
 
+	// VALUE
+
+	_ValueInternationalDictionary: {},
+
 	// CONTROL
 
 	_ControlExtendZombie(Browser) {
@@ -174,6 +178,8 @@ const mod = {
 
 	SetupEverything() {
 		mod.SetupZombie();
+
+		mod.SetupInternational();
 	},
 
 	SetupZombie() {
@@ -192,6 +198,31 @@ const mod = {
 		global.browser = new OLSKBrowser();
 	},
 
+	SetupInternational() {
+		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
+			return;
+		}
+
+		mod._ValueInternationalDictionary = require('glob').sync('**/*i18n*.y*(a)ml', {
+		  cwd: require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
+			realpath: true,
+		}).filter(function(e) {
+		  return require('OLSKInternational').OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
+		}).reduce(function(coll, item) {
+			const key = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
+
+			coll[key] = Object.assign(coll[key] || {}, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8')))
+
+			return coll;
+		}, {});
+
+		global.OLSKTestingLocalized = function(param1, param2) {
+			let outputData = require('OLSKInternational').OLSKInternationalLocalizedString(param1, mod._ValueInternationalDictionary[param2]);
+
+			return typeof outputData === 'string' ? outputData.replace('TRANSLATION_MISSING', '') : outputData;
+		};
+	},
+
 	// LIFECYCLE
 
 	LifecycleModuleDidLoad() {
@@ -201,36 +232,6 @@ const mod = {
 };
 
 mod.LifecycleModuleDidLoad();
-
-let languageDictionary = {};
-(function OLSKMochaLocalizedStrings() {
-	if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
-		return;
-	}
-
-	const pathPackage = require('path');
-	const OLSKInternational = require('OLSKInternational');
-	const OLSKString = require('OLSKString');
-
-	languageDictionary = require('glob').sync('**/*i18n*.y*(a)ml', {
-	  cwd: pathPackage.join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
-		realpath: true,
-	}).filter(function(e) {
-	  return OLSKInternational.OLSKInternationalIsTranslationFileBasename(pathPackage.basename(e));
-	}).reduce(function(coll, item) {
-		let languageID = OLSKInternational.OLSKInternationalLanguageID(pathPackage.basename(item));
-
-		return (coll[languageID] = Object.assign(coll[languageID] || {}, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8')))) && coll;
-	}, {});
-
-	global.OLSKTestingLocalized = function(param1, param2) {
-		let outputData = OLSKInternational.OLSKInternationalLocalizedString(param1, languageDictionary[param2]);
-
-		return typeof outputData === 'string' ? outputData.replace('TRANSLATION_MISSING', '') : outputData;
-	};
-
-	global.OLSKTestingStringWithFormat = OLSKString.OLSKStringWithFormat;
-})();
 
 (function OLSKMochaRoutes() {
 	if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
@@ -261,7 +262,7 @@ let languageDictionary = {};
 		function (inputData) {
 			return (oldRequire({
 				code: inputData,
-			}, languageDictionary) || {
+			}, mod._ValueInternationalDictionary) || {
 				code: inputData,
 			}).code;
 		},
