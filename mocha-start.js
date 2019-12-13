@@ -180,6 +180,8 @@ const mod = {
 		mod.SetupZombie();
 
 		mod.SetupInternational();
+
+		mod.SetupRoutes();
 	},
 
 	SetupZombie() {
@@ -223,6 +225,21 @@ const mod = {
 		};
 	},
 
+	SetupRoutes() {
+		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
+			return;
+		}
+
+		global.OLSKTestingCanonicalFor = function() {
+			console.warn('OLSKTestingCanonicalFor DEPRECATED');
+			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
+		};
+
+		global.OLSKTestingCanonical = function(routeObject, params) {
+			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
+		};
+	},
+
 	// LIFECYCLE
 
 	LifecycleModuleDidLoad() {
@@ -232,20 +249,6 @@ const mod = {
 };
 
 mod.LifecycleModuleDidLoad();
-
-(function OLSKMochaRoutes() {
-	if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
-		return;
-	}
-
-	global.OLSKTestingCanonicalFor = function() {
-		return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
-	};
-
-	global.OLSKTestingCanonical = function(routeObject, params) {
-		return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
-	};
-})();
 
 (function OLSKMochaPreprocess() {
 	const fs = require('fs');

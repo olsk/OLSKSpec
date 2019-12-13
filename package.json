@@ -15,6 +15,9 @@
     "// INTERNATIONAL": null,
     "OLSKInternational": "olsk/OLSKInternational",
 
+    "// ROUTING": null,
+    "OLSKRouting": "olsk/OLSKRouting",
+
     "// .ENV": null,
     "dotenv": "latest",
 
