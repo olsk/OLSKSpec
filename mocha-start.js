@@ -272,7 +272,7 @@ mod.LifecycleModuleDidLoad();
 	];
 
 	require.extensions['.js'] = function(module, filename) {
-		if (filename.match('OLSKRollup')) {
+		if (filename.match('OLSKRollupScaffold')) {
 			return;
 		}
 
