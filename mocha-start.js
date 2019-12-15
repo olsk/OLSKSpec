@@ -163,7 +163,7 @@ const mod = {
 
 		Browser.extend(function(browser) {
 		  browser.pipeline.addHandler(function(browser, request, response) {
-		  	if (request.url.match('player.vimeo.com')) {
+		  	if (request.url.match('player.vimeo.com') || request.url.match('w.soundcloud.com')) {
 		  		return Object.assign(response, {
 		  			status: 200,
 		  		})
