@@ -28,6 +28,40 @@ const mod = {
 		    return browser.OLSKConfirmCallback ? browser.OLSKConfirmCallback(confirm) : confirm;
 		  });
 		});
+
+		Browser.extend(function(browser) {
+		  browser.on('prompt', function(prompt) {
+		    return browser.OLSKPromptCallback ? browser.OLSKPromptCallback(prompt) : prompt;
+		  });
+		});
+		
+		Browser.prototype.OLSKPromptSync = function(inputData) {
+			let outputData = undefined;
+
+			let browser = this;
+			browser.OLSKPromptCallback = function (prompt) {
+				delete browser.OLSKPromptCallback;
+
+				outputData = prompt;
+			};
+
+			inputData();
+
+			return outputData;
+		};
+		
+		Browser.prototype.OLSKPrompt = async function(param1, param2) {
+			let browser = this;
+			return await new Promise(async function (resolve, reject) {
+				browser.OLSKPromptCallback = function (prompt) {
+					delete browser.OLSKPromptCallback;
+
+					return resolve(param2 ? param2(prompt) : prompt);
+				};
+
+				param1();
+			});
+		};
 		
 		Browser.prototype.OLSKConfirmSync = function(inputData) {
 			let outputData = undefined;
