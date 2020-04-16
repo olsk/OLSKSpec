@@ -6,7 +6,7 @@ const uPath = function (inputData) {
 	return require('path').join(__dirname, 'stubs', inputData)
 }
 
-describe('OLSKSpecUITestPaths', function testOLSKSpecUITestPaths() {
+describe('OLSKSpecUITestPaths', function test_OLSKSpecUITestPaths() {
 
 	it('throws if not string', function() {
 		throws(function() {
@@ -46,7 +46,7 @@ describe('OLSKSpecUITestPaths', function testOLSKSpecUITestPaths() {
 
 });
 
-describe('OLSKSpecUISourcePaths', function testOLSKSpecUISourcePaths() {
+describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 
 	it('throws if not string', function() {
 		throws(function() {
