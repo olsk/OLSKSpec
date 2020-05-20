@@ -29,7 +29,7 @@ const mod = {
 		}).shift();
 
 		if (pattern) {
-			args.splice(args.indexOf(pattern))
+			args.splice(args.indexOf(pattern), 1);
 
 			pattern = pattern.match(/^-?-?olsk-match=(.+)/i)[1]
 
