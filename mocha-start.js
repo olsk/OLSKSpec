@@ -1,3 +1,5 @@
+const { deepEqual } = require('assert');
+
 const mod = {
 
 	// VALUE
@@ -206,6 +208,10 @@ const mod = {
 		    return response;
 		  });
 		});
+
+		Browser.Assert.prototype.OLSKTextContent = function(param1, param2, param3 = function (inputData) { return inputData }) {
+		  deepEqual(param3(browser.query(param1).textContent.trim()), param2);
+		};
 	},
 
 	// SETUP
