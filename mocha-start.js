@@ -255,7 +255,7 @@ const mod = {
 
 		const Browser = require('zombie');
 
-		Browser.localhost('loc.tests', process.env.OLSK_SERVER_PORT || 3000);
+		Browser.localhost('loc.tests', process.env.PORT || 3000);
 		
 		mod._ControlExtendZombie(Browser);
 
