@@ -220,6 +220,10 @@ const mod = {
 		Browser.Assert.prototype.OLSKPromptResponse = function(param1, param2) {
 		  deepEqual(browser.OLSKPromptSync(param1).response, param2);
 		};
+
+		Browser.Assert.prototype.OLSKConfirmQuestion = function(param1, param2) {
+		  deepEqual(browser.OLSKConfirmSync(param1).question, param2);
+		};
 	},
 
 	// SETUP
