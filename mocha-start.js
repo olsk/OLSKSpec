@@ -212,6 +212,14 @@ const mod = {
 		Browser.Assert.prototype.OLSKTextContent = function(param1, param2, param3 = function (inputData) { return inputData }) {
 		  deepEqual(param3(browser.query(param1).textContent.trim()), param2);
 		};
+
+		Browser.Assert.prototype.OLSKPromptQuestion = function(param1, param2) {
+		  deepEqual(browser.OLSKPromptSync(param1).question, param2);
+		};
+
+		Browser.Assert.prototype.OLSKPromptResponse = function(param1, param2) {
+		  deepEqual(browser.OLSKPromptSync(param1).response, param2);
+		};
 	},
 
 	// SETUP
