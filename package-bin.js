@@ -13,10 +13,9 @@ const mod = {
 			'--watch',
 			'--file', require('path').join(__dirname, 'mocha-start.js'),
 			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
+			'--reporter', 'min',
 
-			process.argv.slice(2).length
-			? process.argv.slice(2)
-			: ['--reporter', 'min'],
+			process.argv.slice(2),
 
 			]), {
 				stdio: 'inherit'
@@ -66,10 +65,11 @@ const mod = {
 			'--file', require('path').join(__dirname, 'mocha-start.js'),
 			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
 			'--timeout', '1000',
+			'--reporter', 'min',
 
 			args.length
 			? args
-			: ['--reporter', 'min'],
+			: [],
 
 			]), {
 				stdio: 'inherit',
