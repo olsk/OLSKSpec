@@ -23,7 +23,7 @@ const mod = {
 			});
 	},
 
-	ControlUITests(args) {
+	ControlInterfaceTests(args) {
 		let pattern = args.filter(function (e) {
 			return e.match(/^-?-?olsk-match=(.+)/i)
 		}).shift();
@@ -85,11 +85,11 @@ const mod = {
 		require('dotenv').config();
 		
 		if (process.argv[1].endsWith('olsk-spec-ui')) {
-			return mod.ControlUITests(process.argv.slice(2));
+			return mod.ControlInterfaceTests(process.argv.slice(2));
 		};
 
 		if (process.argv[1].endsWith('olsk-spec') && process.argv[2] === 'ui') {
-			return mod.ControlUITests(process.argv.slice(3));
+			return mod.ControlInterfaceTests(process.argv.slice(3));
 		};
 
 		mod.ControlLogicTests();
