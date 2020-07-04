@@ -24,13 +24,13 @@ const mod = {
 
 	ControlInterfaceTests(args) {
 		let pattern = args.filter(function (e) {
-			return e.match(/^-?-?olsk-match=(.+)/i)
+			return e.match(/^-?-?os-match=(.+)/i)
 		}).shift();
 
 		if (pattern) {
 			args.splice(args.indexOf(pattern), 1);
 
-			pattern = pattern.match(/^-?-?olsk-match=(.+)/i)[1]
+			pattern = pattern.match(/^-?-?os-match=(.+)/i)[1]
 
 			const regex = pattern.match(/^\/(.+)\/(.+)?$/);
 
