@@ -236,6 +236,10 @@ const mod = {
 		Browser.Assert.prototype.OLSKIsChecked = function(param1, param2) {
 			deepEqual(browser.query(param1).checked, param2);
 		};
+
+		Browser.Assert.prototype.deepEqual = function(param1, param2) {
+			deepEqual(param1, param2);
+		};
 	},
 
 	// SETUP
