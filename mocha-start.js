@@ -240,6 +240,13 @@ const mod = {
 		Browser.Assert.prototype.deepEqual = function(param1, param2) {
 			deepEqual(param1, param2);
 		};
+
+		Browser.Assert.prototype.OLSKLauncherItems = async function(param1, param2) {
+			await browser.pressButton('.OLSKAppToolbarLauncherButton');
+			await browser.fill('.LCHLauncherFilterInput', param1);
+			browser.assert.elements('.LCHLauncherPipeItem', param2);
+			await browser.pressButton('#TestLCHDebugCloseButton');
+		};
 	},
 
 	// SETUP
