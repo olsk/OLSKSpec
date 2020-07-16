@@ -15,10 +15,12 @@ const mod = {
 			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
 			args.includes('--reporter') ? [] : ['--reporter', 'min'],
 
-			process.argv.slice(2),
+			args.length
+			? args
+			: [],
 
 			]), {
-				stdio: 'inherit'
+				stdio: 'inherit',
 			});
 	},
 
@@ -92,7 +94,7 @@ const mod = {
 			return mod.ControlInterfaceTests(process.argv.slice(3));
 		};
 
-		mod.ControlLogicTests();
+		mod.ControlLogicTests(process.argv.slice(2));
 	},
 
 };
