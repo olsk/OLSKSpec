@@ -6,7 +6,7 @@ const mod = {
 
 	// CONTROL
 
-	ControlLogicTests() {
+	ControlLogicTests(args) {
 		require('child_process').spawn('mocha', [].concat.apply([], [
 			'**/*-tests.js',
 			'--exclude', '**/+(node_modules|__*)/**',
