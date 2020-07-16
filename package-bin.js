@@ -25,27 +25,58 @@ const mod = {
 	},
 
 	ControlInterfaceTests(args) {
-		let pattern = args.filter(function (e) {
+		let include = args.filter(function (e) {
 			return e.match(/^-?-?os-match=(.+)/i)
 		}).shift();
 
-		if (pattern) {
-			args.splice(args.indexOf(pattern), 1);
+		if (include) {
+			args.splice(args.indexOf(include), 1);
 
-			pattern = pattern.match(/^-?-?os-match=(.+)/i)[1]
+			include = include.match(/^-?-?os-match=(.+)/i)[1]
 
-			const regex = pattern.match(/^\/(.+)\/(.+)?$/);
+			const regex = include.match(/^\/(.+)\/(.+)?$/);
 
 			if (regex) {
-				pattern = new RegExp(regex[1], regex[2]);
-			};
-		};
+				include = new RegExp(regex[1], regex[2]);
+			}
+		}
+		
+		let exclude = args.filter(function (e) {
+			return e.match(/^-?-?os-skip=(.+)/i)
+		}).shift();
 
+		if (exclude) {
+			args.splice(args.indexOf(exclude), 1);
+
+			exclude = exclude.match(/^-?-?os-skip=(.+)/i)[1]
+
+			const regex = exclude.match(/^\/(.+)\/(.+)?$/);
+
+			if (regex) {
+				exclude = new RegExp(regex[1], regex[2]);
+			}
+		}
+		
 		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd()).filter(function (e) {
-			return pattern ? e.match(pattern) : true;
+			if (include && e.match(include)) {
+				return true;
+			}
+			
+			if (exclude && e.match(exclude)) {
+				return false;
+			}
+
+			if (include && !e.match(include)) {
+				return false;
+			}
+			
+			if (exclude && !e.match(exclude)) {
+				return true;
+			}
+			
+			return true;
 		});
 		const sourcePaths = OLSKSpec.OLSKSpecUISourcePaths(process.cwd());
-
 		require('child_process').spawn('supervisor', [].concat.apply([], [
 			'--watch', sourcePaths.concat(testPaths).join(','),
 			'--extensions', sourcePaths.concat(testPaths).reduce(function (coll, item) {
