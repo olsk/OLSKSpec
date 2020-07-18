@@ -254,6 +254,12 @@ const mod = {
 			browser.assert.text('.LCHLauncherPipeItem', param2);
 			await browser.pressButton('#TestLCHDebugCloseButton');
 		};
+
+		Browser.prototype.OLSKLauncherRun = async function(inputData) {
+			await browser.pressButton('.OLSKAppToolbarLauncherButton');
+			await browser.fill('.LCHLauncherFilterInput', inputData);
+			await browser.click('.LCHLauncherPipeItem');
+		};
 	},
 
 	// SETUP
