@@ -300,7 +300,6 @@ const mod = {
 		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary({
 			OLSKInternationalFileDelegateDirectory: require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
 			OLSKInternationalFileDelegateGlobSync: require('glob').sync,
-			OLSKInternationalFileDelegateFileRead: require('fs').readFileSync,
 			OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		});
