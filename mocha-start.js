@@ -298,10 +298,9 @@ const mod = {
 		}
 
 		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary({
-			OLSKInternationalFileDelegateDirectory: require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
 			OLSKInternationalFileDelegateGlobSync: require('glob').sync,
 			OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
-		});
+		}, require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'));
 
 		global.OLSKTestingLocalized = function(param1, param2) {
 			let outputData = require('OLSKInternational').OLSKInternationalLocalizedString(param1, mod._ValueInternationalDictionary[param2]);
