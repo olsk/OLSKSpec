@@ -301,7 +301,6 @@ const mod = {
 			OLSKInternationalFileDelegateDirectory: require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
 			OLSKInternationalFileDelegateGlobSync: require('glob').sync,
 			OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
-			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		});
 
 		global.OLSKTestingLocalized = function(param1, param2) {
