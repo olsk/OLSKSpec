@@ -322,11 +322,6 @@ const mod = {
 			return;
 		}
 
-		global.OLSKTestingCanonicalFor = function() {
-			console.warn('OLSKTestingCanonicalFor DEPRECATED');
-			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
-		};
-
 		global.OLSKTestingCanonical = function(routeObject, params) {
 			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
 		};
