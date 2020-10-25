@@ -297,18 +297,14 @@ const mod = {
 			return;
 		}
 
-		mod._ValueInternationalDictionary = require('glob').sync('**/*i18n*.y*(a)ml', {
-		  cwd: require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
-			realpath: true,
-		}).filter(function(e) {
-		  return require('OLSKInternational').OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
-		}).reduce(function(coll, item) {
-			const key = require('OLSKInternational').OLSKInternationalLanguageID(require('path').basename(item));
-
-			coll[key] = Object.assign(coll[key] || {}, require('js-yaml').safeLoad(require('fs').readFileSync(item, 'utf8')))
-
-			return coll;
-		}, {});
+		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary({
+			OLSKInternationalFileDelegateDirectory: require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'),
+			OLSKInternationalFileDelegateGlobSync: require('glob').sync,
+			OLSKInternationalFileDelegatePathBasename: require('path').basename,
+			OLSKInternationalFileDelegateFileRead: require('fs').readFileSync,
+			OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
+			OLSKInternationalFileDelegateFileWrite: (function () {}),
+		});
 
 		global.OLSKTestingLocalized = function(param1, param2) {
 			let outputData = require('OLSKInternational').OLSKInternationalLocalizedString(param1, mod._ValueInternationalDictionary[param2]);
@@ -321,6 +317,11 @@ const mod = {
 		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
 			return;
 		}
+
+		global.OLSKTestingCanonicalFor = function() {
+			console.warn('OLSKTestingCanonicalFor DEPRECATED');
+			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
+		};
 
 		global.OLSKTestingCanonical = function(routeObject, params) {
 			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
