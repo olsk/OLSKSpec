@@ -14,7 +14,6 @@
 
     "// INTERNATIONAL": null,
     "OLSKInternational": "olsk/OLSKInternational",
-    "js-yaml": "latest",
 
     "// ROUTING": null,
     "OLSKRouting": "olsk/OLSKRouting",
