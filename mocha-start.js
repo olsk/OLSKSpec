@@ -298,7 +298,6 @@ const mod = {
 		}
 
 		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary({
-			OLSKInternationalFileDelegateGlobSync: require('glob').sync,
 			OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
 		}, require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'));
 
