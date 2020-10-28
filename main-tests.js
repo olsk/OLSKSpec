@@ -4,7 +4,50 @@ const mainModule = require('./main.js');
 
 const uPath = function (inputData) {
 	return require('path').join(__dirname, 'stubs', inputData)
-}
+};
+
+describe('OLSKSpecUIArguments', function test_OLSKSpecUIArguments() {
+
+	it('throws if not array', function() {
+		throws(function() {
+			mainModule.OLSKSpecUIArguments(null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns input', function() {
+		const item = [Math.random().toString()];
+		deepEqual(mainModule.OLSKSpecUIArguments(item), item);
+	});
+
+	context('match=', function () {
+		
+		it('ignores if not starting', function() {
+			const item = ['alfa-match=bravo'];
+			deepEqual(mainModule.OLSKSpecUIArguments(item), item);
+		});
+
+		it('replaces match=', function() {
+			const item = ['match=bravo'];
+			deepEqual(mainModule.OLSKSpecUIArguments(item), ['-os-match=bravo']);
+		});
+	
+	});
+
+	context('skip=', function () {
+		
+		it('ignores if not starting', function() {
+			const item = ['alfa-skip=bravo'];
+			deepEqual(mainModule.OLSKSpecUIArguments(item), item);
+		});
+
+		it('replaces skip=', function() {
+			const item = ['skip=bravo'];
+			deepEqual(mainModule.OLSKSpecUIArguments(item), ['-os-skip=bravo']);
+		});
+	
+	});
+
+});
 
 describe('OLSKSpecUITestPaths', function test_OLSKSpecUITestPaths() {
 
