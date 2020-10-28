@@ -6,8 +6,8 @@ const mod = {
 
 	// CONTROL
 
-	ControlLogicTests(args) {
-		require('child_process').spawn('mocha', [].concat.apply([], [
+	ControlLogicTests(args, useGlobal = false) {
+		require('child_process').spawn(useGlobal ? 'mocha' : './node_modules/.bin/mocha', [].concat.apply([], [
 			'**/*-tests.js',
 			'--exclude', '**/+(node_modules|__*)/**',
 			'--watch',
@@ -21,10 +21,23 @@ const mod = {
 
 			]), {
 				stdio: 'inherit',
+			}).on('error', function (err) {
+				throw new Error('ErrorInputNotValid');
+				if (useGlobal) {
+					return;
+				}
+
+				if (!err.message.includes('ENOENT')) {
+					return;
+				}
+
+				mod.ControlLogicTests(args, true);
 			});
 	},
 
-	ControlInterfaceTests(args) {
+	ControlInterfaceTests(inputData, useGlobal = false) {
+		const args = inputData.slice();
+
 		let include = args.filter(function (e) {
 			return e.match(/^-?-?os-match=(.+)/i)
 		}).shift();
@@ -90,7 +103,7 @@ const mod = {
 			}, []).join(','),
 			'--no-restart-on', 'exit',
 			'--quiet',
-			'--exec', 'mocha',
+			'--exec', useGlobal ? 'mocha' : './node_modules/.bin/mocha',
 
 			'--',
 
@@ -109,6 +122,16 @@ const mod = {
 				env: Object.assign({
 					OLSK_TESTING_BEHAVIOUR: true,
 				}, process.env),
+			}).on('error', function (err) {
+				if (useGlobal) {
+					return;
+				}
+
+				if (!err.message.includes('ENOENT')) {
+					return;
+				}
+
+				mod.ControlInterfaceTests(inputData, true);
 			});
 	},
 
