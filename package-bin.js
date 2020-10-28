@@ -144,11 +144,11 @@ const mod = {
 
 		if (mod._DataArguments[1].endsWith('olsk-spec-ui')) {
 			return mod.ControlInterfaceTests(mod._DataArguments.slice(2));
-		};
+		}
 
 		if (mod._DataArguments[1].endsWith('olsk-spec') && mod._DataArguments[2] === 'ui') {
 			return mod.ControlInterfaceTests(mod._DataArguments.slice(3));
-		};
+		}
 
 		mod.ControlLogicTests(mod._DataArguments.slice(2));
 	},

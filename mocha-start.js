@@ -148,7 +148,7 @@ const mod = {
 			return new Promise(async function (resolve, reject) {
 				await inputData();
 
-				return resolve(outputData)
+				return resolve(outputData);
 			});
 		};
 
@@ -186,7 +186,7 @@ const mod = {
 				browser.OLSKResponseCallback = function (outputData) {
 					delete browser.OLSKResponseCallback;
 
-					return resolve(outputData)
+					return resolve(outputData);
 				};
 
 				inputData();
@@ -194,7 +194,7 @@ const mod = {
 		};
 		
 		Browser.prototype.OLSKVisit = function(routeObject, params) {
-			return this.visit(global.OLSKTestingCanonical(routeObject, params))
+			return this.visit(global.OLSKTestingCanonical(routeObject, params));
 		};
 
 		Browser.extend(function(browser) {
@@ -202,14 +202,14 @@ const mod = {
 		  	if (request.url.match('player.vimeo.com') || request.url.match('w.soundcloud.com')) {
 		  		return Object.assign(response, {
 		  			status: 200,
-		  		})
+		  		});
 		  	}
 		    
 		    return response;
 		  });
 		});
 
-		Browser.Assert.prototype.OLSKTextContent = function(param1, param2, param3 = function (inputData) { return inputData }) {
+		Browser.Assert.prototype.OLSKTextContent = function(param1, param2, param3 = function (inputData) { return inputData; }) {
 		  deepEqual(param3(browser.query(param1).textContent.trim()), param2);
 		};
 

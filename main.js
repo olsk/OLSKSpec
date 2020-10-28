@@ -7,11 +7,11 @@ const mod = {
 
 		return inputData.map(function (e) {
 			if (e.match(/^match=/)) {
-				return e.replace(/^match=/, '-os-match=')
+				return e.replace(/^match=/, '-os-match=');
 			}
 
 			if (e.match(/^skip=/)) {
-				return e.replace(/^skip=/, '-os-skip=')
+				return e.replace(/^skip=/, '-os-skip=');
 			}
 
 			return e;

@@ -3,7 +3,7 @@ const { throws, deepEqual } = require('assert');
 const mainModule = require('./main.js');
 
 const uPath = function (inputData) {
-	return require('path').join(__dirname, 'stubs', inputData)
+	return require('path').join(__dirname, 'stubs', inputData);
 };
 
 describe('OLSKSpecUIArguments', function test_OLSKSpecUIArguments() {
@@ -74,13 +74,13 @@ describe('OLSKSpecUITestPaths', function test_OLSKSpecUITestPaths() {
 	it('includes if formatted', function() {
 		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('charlie')), [
 			uPath('charlie/ui-test-alfa.js'),
-			]);
+		]);
 	});
 
 	it('includes if in subfolder', function() {
 		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('echo')), [
 			uPath('echo/alfa/ui-test-alfa.js'),
-			]);
+		]);
 	});
 
 	it('excludes if in standard ignore', function() {
@@ -110,13 +110,13 @@ describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 	it('includes ui-behaviour.js', function() {
 		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('charlie')), [
 			uPath('charlie/ui-behaviour.js'),
-			]);
+		]);
 	});
 
 	it('includes if in subfolder', function() {
 		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('echo')), [
 			uPath('echo/alfa/ui-behaviour.js'),
-			]);
+		]);
 	});
 
 	it('excludes if in standard ignore', function() {
@@ -126,19 +126,19 @@ describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 	it('includes view.ejs', function() {
 		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('golf')), [
 			uPath('golf/view.ejs'),
-			]);
+		]);
 	});
 
 	it('includes *.md', function() {
 		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('hotel')), [
 			uPath('hotel/alfa.md'),
-			]);
+		]);
 	});
 
 	it('includes __compiled', function() {
 		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('indigo')), [
 			uPath('indigo/__compiled/ui-behaviour.js'),
-			]);
+		]);
 	});
 
 });
