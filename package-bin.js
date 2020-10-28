@@ -112,20 +112,36 @@ const mod = {
 			});
 	},
 
+	// SETUP
+
+	SetupEverything () {
+		mod.SetupConfigVariables();
+
+		mod.SetupDataArguments();
+
+		if (mod._DataArguments[1].endsWith('olsk-spec-ui')) {
+			return mod.ControlInterfaceTests(mod._DataArguments.slice(2));
+		};
+
+		if (mod._DataArguments[1].endsWith('olsk-spec') && mod._DataArguments[2] === 'ui') {
+			return mod.ControlInterfaceTests(mod._DataArguments.slice(3));
+		};
+
+		mod.ControlLogicTests(mod._DataArguments.slice(2));
+	},
+
+	SetupConfigVariables () {
+		require('dotenv').config();
+	},
+
+	SetupDataArguments () {
+		mod._DataArguments = OLSKSpec.OLSKSpecUIArguments(process.argv);
+	},
+
 	// LIFECYCLE
 
 	LifecycleScriptDidLoad() {
-		require('dotenv').config();
-		
-		if (process.argv[1].endsWith('olsk-spec-ui')) {
-			return mod.ControlInterfaceTests(process.argv.slice(2));
-		};
-
-		if (process.argv[1].endsWith('olsk-spec') && process.argv[2] === 'ui') {
-			return mod.ControlInterfaceTests(process.argv.slice(3));
-		};
-
-		mod.ControlLogicTests(process.argv.slice(2));
+		mod.SetupEverything();
 	},
 
 };
