@@ -21,8 +21,17 @@
     "// .ENV": null,
     "dotenv": "latest",
 
-    "// TEST RUNNER": null,
+    "// DSL": null,
+    "mocha": "7.x",
+    
+    "// BROWSER TESTING": null,
     "zombie": "latest",
+
+    "// COMPLEX FILE WATCHING": null,
+    "supervisor": "latest",
+
+    "// MOCHA PREPROCESS": null,
+    "OLSKTesting": "olsk/OLSKTesting",
 
     "// I sacrifice myself for the commas of others": null
   }
