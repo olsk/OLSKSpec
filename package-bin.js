@@ -22,7 +22,6 @@ const mod = {
 			]), {
 				stdio: 'inherit',
 			}).on('error', function (err) {
-				throw new Error('ErrorInputNotValid');
 				if (useGlobal) {
 					return;
 				}
