@@ -114,6 +114,20 @@ const mod = {
 			return outputData;
 		};
 
+		Browser.prototype.OLSKAlertTextAsync = function(inputData) {
+			const browser = this;
+
+			return new Promise(async function (resolve, reject) {
+				browser.OLSKAlertCallback = function (alert) {
+					delete browser.OLSKAlertCallback;
+
+					resolve(alert);
+				};
+
+				await inputData();
+			});
+		};
+
 		Browser.extend(function(browser) {
 		  browser.on('OLSKMessage', function(data) {
 		    return browser.OLSKMessageCallback ? browser.OLSKMessageCallback(data) : data;
@@ -310,6 +324,11 @@ const mod = {
 		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
 			return;
 		}
+
+		global.OLSKTestingCanonicalFor = function() {
+			console.warn('OLSKTestingCanonicalFor DEPRECATED');
+			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(...arguments);
+		};
 
 		global.OLSKTestingCanonical = function(routeObject, params) {
 			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
