@@ -311,7 +311,7 @@ const mod = {
 			return;
 		}
 
-		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary(require('path').join(process.cwd(), process.env.OLSK_APP_FOLDER || 'os-app'));
+		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary(process.cwd());
 
 		global.OLSKTestingLocalized = function(param1, param2) {
 			let outputData = require('OLSKInternational').OLSKInternationalLocalizedString(param1, mod._ValueInternationalDictionary[param2]);
