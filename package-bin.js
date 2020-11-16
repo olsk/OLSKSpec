@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+require('OLSKEnv').OLSKEnvGuard();
+
 const OLSKSpec = require('./main.js');
 
 const mod = {
@@ -137,8 +139,6 @@ const mod = {
 	// SETUP
 
 	SetupEverything () {
-		mod.SetupConfigVariables();
-
 		mod.SetupDataArguments();
 
 		if (mod._DataArguments[1].endsWith('olsk-spec-ui')) {
@@ -150,10 +150,6 @@ const mod = {
 		}
 
 		mod.ControlLogicTests(mod._DataArguments.slice(2));
-	},
-
-	SetupConfigVariables () {
-		require('dotenv').config();
 	},
 
 	SetupDataArguments () {
