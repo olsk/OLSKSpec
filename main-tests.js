@@ -142,3 +142,49 @@ describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 	});
 
 });
+
+describe('OLSKSpecMochaPaths', function test_OLSKSpecMochaPaths() {
+
+	const _OLSKSpecMochaPaths = function (inputData) {
+		return mod.OLSKSpecMochaPaths(Object.assign({
+			ParamPackageDirectory: Math.random().toString(),
+			ParamWorkingDirectory: Math.random().toString(),
+		}, inputData));
+	}
+
+	it('throws if not object', function () {
+		throws(function () {
+			mod.OLSKSpecMochaPaths(null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws if ParamPackageDirectory not string', function () {
+		throws(function () {
+			_OLSKSpecMochaPaths({
+				ParamPackageDirectory: null,
+			});
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws if ParamWorkingDirectory not string', function () {
+		throws(function () {
+			_OLSKSpecMochaPaths({
+				ParamWorkingDirectory: null,
+			});
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns array', function() {
+		const ParamPackageDirectory = Math.random().toString();
+		const ParamWorkingDirectory = Math.random().toString();
+		deepEqual(mod.OLSKSpecMochaPaths({
+			ParamPackageDirectory,
+			ParamWorkingDirectory,
+		}), [
+			require('path').join(ParamPackageDirectory, './node_modules/.bin/mocha'),
+			require('path').join(ParamPackageDirectory, '../.bin/mocha'),
+			require('path').join(ParamWorkingDirectory, './node_modules/.bin/mocha'),
+			]);
+	});
+
+});

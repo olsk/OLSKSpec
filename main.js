@@ -55,6 +55,26 @@ const mod = {
 			return !e.match(require('OLSKDisk').OLSKDiskStandardIgnorePattern());
 		});
 	},
+
+	OLSKSpecMochaPaths (inputData) {
+		if (typeof inputData !== 'object' || inputData === null) {
+			throw new Error('OLSKErrorInputNotValid');
+		}
+
+		if (typeof inputData.ParamPackageDirectory !== 'string') {
+			throw new Error('OLSKErrorInputNotValid');
+		}
+
+		if (typeof inputData.ParamWorkingDirectory !== 'string') {
+			throw new Error('OLSKErrorInputNotValid');
+		}
+
+		return [
+			require('path').join(inputData.ParamPackageDirectory, './node_modules/.bin/mocha'),
+			require('path').join(inputData.ParamPackageDirectory, '../.bin/mocha'),
+			require('path').join(inputData.ParamWorkingDirectory, './node_modules/.bin/mocha'),
+			];
+	},
 	
 };
 
