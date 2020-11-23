@@ -1,6 +1,6 @@
 const { throws, deepEqual } = require('assert');
 
-const mainModule = require('./main.js');
+const mod = require('./main.js');
 
 const uPath = function (inputData) {
 	return require('path').join(__dirname, 'stubs', inputData);
@@ -10,25 +10,25 @@ describe('OLSKSpecUIArguments', function test_OLSKSpecUIArguments() {
 
 	it('throws if not array', function() {
 		throws(function() {
-			mainModule.OLSKSpecUIArguments(null);
+			mod.OLSKSpecUIArguments(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns input', function() {
 		const item = [Math.random().toString()];
-		deepEqual(mainModule.OLSKSpecUIArguments(item), item);
+		deepEqual(mod.OLSKSpecUIArguments(item), item);
 	});
 
 	context('match=', function () {
 		
 		it('ignores if not starting', function() {
 			const item = ['alfa-match=bravo'];
-			deepEqual(mainModule.OLSKSpecUIArguments(item), item);
+			deepEqual(mod.OLSKSpecUIArguments(item), item);
 		});
 
 		it('replaces match=', function() {
 			const item = ['match=bravo'];
-			deepEqual(mainModule.OLSKSpecUIArguments(item), ['-os-match=bravo']);
+			deepEqual(mod.OLSKSpecUIArguments(item), ['-os-match=bravo']);
 		});
 	
 	});
@@ -37,12 +37,12 @@ describe('OLSKSpecUIArguments', function test_OLSKSpecUIArguments() {
 		
 		it('ignores if not starting', function() {
 			const item = ['alfa-skip=bravo'];
-			deepEqual(mainModule.OLSKSpecUIArguments(item), item);
+			deepEqual(mod.OLSKSpecUIArguments(item), item);
 		});
 
 		it('replaces skip=', function() {
 			const item = ['skip=bravo'];
-			deepEqual(mainModule.OLSKSpecUIArguments(item), ['-os-skip=bravo']);
+			deepEqual(mod.OLSKSpecUIArguments(item), ['-os-skip=bravo']);
 		});
 	
 	});
@@ -53,38 +53,38 @@ describe('OLSKSpecUITestPaths', function test_OLSKSpecUITestPaths() {
 
 	it('throws if not string', function() {
 		throws(function() {
-			mainModule.OLSKSpecUITestPaths(null);
+			mod.OLSKSpecUITestPaths(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if not real directory', function() {
 		throws(function() {
-			mainModule.OLSKSpecUITestPaths(uPath('alf'));
+			mod.OLSKSpecUITestPaths(uPath('alf'));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('alfa')), []);
+		deepEqual(mod.OLSKSpecUITestPaths(uPath('alfa')), []);
 	});
 
 	it('excludes if not formatted', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('bravo')), []);
+		deepEqual(mod.OLSKSpecUITestPaths(uPath('bravo')), []);
 	});
 
 	it('includes if formatted', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('charlie')), [
+		deepEqual(mod.OLSKSpecUITestPaths(uPath('charlie')), [
 			uPath('charlie/ui-test-alfa.js'),
 		]);
 	});
 
 	it('includes if in subfolder', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('echo')), [
+		deepEqual(mod.OLSKSpecUITestPaths(uPath('echo')), [
 			uPath('echo/alfa/ui-test-alfa.js'),
 		]);
 	});
 
 	it('excludes if in standard ignore', function() {
-		deepEqual(mainModule.OLSKSpecUITestPaths(uPath('foxtrot')), []);
+		deepEqual(mod.OLSKSpecUITestPaths(uPath('foxtrot')), []);
 	});
 
 });
@@ -93,50 +93,50 @@ describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 
 	it('throws if not string', function() {
 		throws(function() {
-			mainModule.OLSKSpecUISourcePaths(null);
+			mod.OLSKSpecUISourcePaths(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws if not real directory', function() {
 		throws(function() {
-			mainModule.OLSKSpecUISourcePaths(uPath('alf'));
+			mod.OLSKSpecUISourcePaths(uPath('alf'));
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns array', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('alfa')), []);
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('alfa')), []);
 	});
 
 	it('includes ui-behaviour.js', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('charlie')), [
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('charlie')), [
 			uPath('charlie/ui-behaviour.js'),
 		]);
 	});
 
 	it('includes if in subfolder', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('echo')), [
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('echo')), [
 			uPath('echo/alfa/ui-behaviour.js'),
 		]);
 	});
 
 	it('excludes if in standard ignore', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('foxtrot')), []);
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('foxtrot')), []);
 	});
 
 	it('includes view.ejs', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('golf')), [
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('golf')), [
 			uPath('golf/view.ejs'),
 		]);
 	});
 
 	it('includes *.md', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('hotel')), [
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('hotel')), [
 			uPath('hotel/alfa.md'),
 		]);
 	});
 
 	it('includes __compiled', function() {
-		deepEqual(mainModule.OLSKSpecUISourcePaths(uPath('indigo')), [
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('indigo')), [
 			uPath('indigo/__compiled/ui-behaviour.js'),
 		]);
 	});
