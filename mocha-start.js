@@ -321,10 +321,6 @@ const mod = {
 	},
 
 	SetupRoutes() {
-		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
-			return;
-		}
-
 		global.OLSKTestingCanonical = function(routeObject, params) {
 			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
 		};
