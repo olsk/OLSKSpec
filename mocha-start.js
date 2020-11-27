@@ -168,6 +168,10 @@ const mod = {
 
 		Browser.extend(function(browser) {
 		  browser.on('request', function(request) {
+		  	if (request.url.match('player.vimeo.com') || request.url.match('w.soundcloud.com')) {
+		  		request.url = 'http://loc.tests';
+		  	}
+
 		    return browser.OLSKRequestCallback ? browser.OLSKRequestCallback(request) : request;
 		  });
 		});
@@ -210,18 +214,6 @@ const mod = {
 		Browser.prototype.OLSKVisit = function(routeObject, params) {
 			return this.visit(global.OLSKTestingCanonical(routeObject, params));
 		};
-
-		Browser.extend(function(browser) {
-		  browser.pipeline.addHandler(function(browser, request, response) {
-		  	if (request.url.match('player.vimeo.com') || request.url.match('w.soundcloud.com')) {
-		  		return Object.assign(response, {
-		  			status: 200,
-		  		});
-		  	}
-		    
-		    return response;
-		  });
-		});
 
 		Browser.Assert.prototype.OLSKTextContent = function(param1, param2, param3 = function (inputData) { return inputData; }) {
 		  deepEqual(param3(browser.query(param1).textContent.trim()), param2);
