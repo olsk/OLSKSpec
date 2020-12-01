@@ -1,3 +1,5 @@
+const _require = require;
+
 const mod = {
 
 	OLSKSpecUIArguments (inputData) {
@@ -23,15 +25,15 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(inputData)) {
+		if (!_require('OLSKDisk').OLSKDiskIsRealFolderPath(inputData)) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return require('glob').sync('**/ui-test-*.js', {
+		return _require('glob').sync('**/ui-test-*.js', {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
-			return !e.match(require('OLSKDisk').OLSKDiskStandardIgnorePattern());
+			return !e.match(_require('OLSKDisk').OLSKDiskStandardIgnorePattern());
 		});
 	},
 
@@ -40,11 +42,11 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		if (!require('OLSKDisk').OLSKDiskIsRealFolderPath(inputData)) {
+		if (!_require('OLSKDisk').OLSKDiskIsRealFolderPath(inputData)) {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return require('glob').sync('**/+(ui-behaviour.js|*.ejs|*.md)', {
+		return _require('glob').sync('**/+(ui-behaviour.js|*.ejs|*.md)', {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
@@ -52,7 +54,7 @@ const mod = {
 				return true;
 			}
 			
-			return !e.match(require('OLSKDisk').OLSKDiskStandardIgnorePattern());
+			return !e.match(_require('OLSKDisk').OLSKDiskStandardIgnorePattern());
 		});
 	},
 
@@ -70,9 +72,9 @@ const mod = {
 		}
 
 		return [
-			require('path').join(inputData.ParamPackageDirectory, './node_modules/.bin/mocha'),
-			require('path').join(inputData.ParamPackageDirectory, '../.bin/mocha'),
-			require('path').join(inputData.ParamWorkingDirectory, './node_modules/.bin/mocha'),
+			_require('path').join(inputData.ParamPackageDirectory, './node_modules/.bin/mocha'),
+			_require('path').join(inputData.ParamPackageDirectory, '../.bin/mocha'),
+			_require('path').join(inputData.ParamWorkingDirectory, './node_modules/.bin/mocha'),
 			];
 	},
 
@@ -104,15 +106,17 @@ const mod = {
 
 		return inputData;
 	},
+	
+};
 
-	OLSK_SPEC_UI () {
+Object.assign(exports, mod);
+
+if (typeof exports === 'object') {
+	exports.OLSK_SPEC_UI = function () {
 		if (typeof navigator === 'undefined') {
 			return false;
 		}
 
 		return navigator.appName === 'Zombie';
-	},
-	
-};
-
-Object.assign(exports, mod);
+	};
+}
