@@ -341,7 +341,7 @@ mod.LifecycleModuleDidLoad();
 	}
 	
 	const replaceFunctions = [
-		require('OLSKTesting')._OLSKTestingMochaReplaceES6Import,
+		require('./main.js')._OLSKSpecMochaReplaceES6Import,
 		function (inputData) {
 			return (oldRequire({
 				code: inputData,

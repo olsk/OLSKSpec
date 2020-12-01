@@ -75,6 +75,35 @@ const mod = {
 			require('path').join(inputData.ParamWorkingDirectory, './node_modules/.bin/mocha'),
 			];
 	},
+
+	_OLSKSpecMochaReplaceES6Import (inputData) {
+		const exportable = [];
+		
+		inputData = inputData
+			.replace(/^import \* as (\w+) from ['"]([^'"]+)['"];?/gm, 'var $1 = require("$2");')
+			// .replace(/^import (\w+) from ['"]([^'"]+)['"];?/gm, 'var {default: $1} = require("$2");')
+			.replace(/^import (\w+) from ['"]([^'"]+)['"];?/gm, 'var _$1 = require("$2"); const $1 = _$1.default || _$1')
+			.replace(/^import {([^}]+)} from ['"](.+)['"];?/gm, 'var {$1} = require("$2");')
+			.replace(/^export default /gm, 'exports.default = ')
+			.replace(/^export (const|let|var|class|function) (\w+)/gm, (match, type, name) => {
+				exportable.push(name);
+				return `${type} ${name}`;
+			})
+			.replace(/^export \{([^}]+)\}(?: from ['"]([^'"]+)['"];?)?/gm, (match, names, source) => {
+				names.split(',').filter(Boolean).forEach(name => {
+					exportable.push(name);
+				});
+
+				return source ? `const { ${names} } = require("${source}");` : '';
+			})
+			.replace(/^export function (\w+)/gm, 'exports.$1 = function $1');
+
+		exportable.forEach(name => {
+			inputData += `\nexports.${name} = ${name};`;
+		});
+
+		return inputData;
+	},
 	
 };
 
