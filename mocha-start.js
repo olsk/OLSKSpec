@@ -316,7 +316,7 @@ const mod = {
 
 	SetupRoutes() {
 		global.OLSKTestingCanonical = function(routeObject, params) {
-			return require('OLSKRouting').OLSKRoutingCanonicalPathWithRoutePathAndOptionalParams(routeObject.OLSKRoutePath, params);
+			return require('OLSKRouting').OLSKRoutingCanonicalPath(routeObject.OLSKRoutePath, params);
 		};
 	},
 
