@@ -310,6 +310,8 @@ const mod = {
 
 			return typeof outputData === 'string' ? outputData.replace('TRANSLATION_MISSING', '') : outputData;
 		};
+
+		global.OLSKTestingFormatted = require('OLSKString').OLSKStringWithFormat;
 	},
 
 	SetupRoutes() {
