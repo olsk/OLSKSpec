@@ -104,6 +104,14 @@ const mod = {
 
 		return inputData;
 	},
+
+	OLSK_SPEC_UI () {
+		if (typeof navigator === 'undefined') {
+			return false;
+		}
+
+		return navigator.appName === 'Zombie';
+	},
 	
 };
 
