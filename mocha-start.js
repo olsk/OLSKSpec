@@ -283,7 +283,7 @@ const mod = {
 	},
 
 	SetupZombie() {
-		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
+		if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
 			return;
 		}
 
@@ -299,7 +299,7 @@ const mod = {
 	},
 
 	SetupInternational() {
-		if (process.env.OLSK_TESTING_BEHAVIOUR !== 'true') {
+		if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
 			return;
 		}
 

@@ -120,7 +120,7 @@ const mod = {
 			]), {
 				stdio: 'inherit',
 				env: Object.assign({
-					OLSK_TESTING_BEHAVIOUR: true,
+					OLSK_SPEC_MOCHA_INTERFACE: true,
 				}, process.env),
 			});
 	},
