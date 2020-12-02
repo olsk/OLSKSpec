@@ -272,65 +272,47 @@ const mod = {
 		};
 	},
 
-	// SETUP
-
-	SetupEverything() {
-		mod.SetupZombie();
-
-		mod.SetupInternational();
-
-		mod.SetupRoutes();
-	},
-
-	SetupZombie() {
-		if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
-			return;
-		}
-
-		const Browser = require('zombie');
-
-		Browser.localhost('loc.tests', process.env.PORT || 3000);
-		
-		mod._ControlExtendZombie(Browser);
-
-		global.OLSKBrowser = Browser;
-
-		global.browser = new OLSKBrowser();
-	},
-
-	SetupInternational() {
-		if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
-			return;
-		}
-
-		mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary(process.cwd());
-
-		global.OLSKTestingLocalized = function(param1, param2) {
-			let outputData = require('OLSKInternational').OLSKInternationalLocalizedString(param1, mod._ValueInternationalDictionary[param2]);
-
-			return typeof outputData === 'string' ? outputData.replace('TRANSLATION_MISSING', '') : outputData;
-		};
-
-		global.OLSKTestingFormatted = require('OLSKString').OLSKStringFormatted;
-	},
-
-	SetupRoutes() {
-		global.OLSKTestingCanonical = function(routeObject, params) {
-			return require('OLSKRouting').OLSKRoutingCanonicalPath(routeObject.OLSKRoutePath, params);
-		};
-	},
-
-	// LIFECYCLE
-
-	LifecycleModuleDidLoad() {
-		mod.SetupEverything();
-	},
-
 };
 
-mod.LifecycleModuleDidLoad();
+(function OLSKSpecZombie() {
+	if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
+		return;
+	}
 
-(function OLSKMochaPreprocess() {
+	const Browser = require('zombie');
+
+	Browser.localhost('loc.tests', process.env.PORT || 3000);
+	
+	mod._ControlExtendZombie(Browser);
+
+	global.OLSKBrowser = Browser;
+
+	global.browser = new OLSKBrowser();
+})();
+
+(function OLSKSpecInternational() {
+	if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
+		return;
+	}
+
+	mod._ValueInternationalDictionary = require('OLSKInternational').OLSKInternationalDictionary(process.cwd());
+
+	global.OLSKTestingLocalized = function(param1, param2) {
+		let outputData = require('OLSKInternational').OLSKInternationalLocalizedString(param1, mod._ValueInternationalDictionary[param2]);
+
+		return typeof outputData === 'string' ? outputData.replace('TRANSLATION_MISSING', '') : outputData;
+	};
+
+	global.OLSKTestingFormatted = require('OLSKString').OLSKStringFormatted;
+})();
+
+(function OLSKSpecRoutes() {
+	global.OLSKTestingCanonical = function(routeObject, params) {
+		return require('OLSKRouting').OLSKRoutingCanonicalPath(routeObject.OLSKRoutePath, params);
+	};
+})();
+
+(function OLSKSpecMochaPreprocess() {
 	const fs = require('fs');
 	let oldRequire;
 
@@ -367,7 +349,7 @@ mod.LifecycleModuleDidLoad();
 	};
 })();
 
-(function OLSKMochaErrors() {
+(function OLSKSpecMochaErrors() {
 	process.on('unhandledRejection', () => {
 		// console.log('Unhandledd Rejection at:', arguments)
 		// Recommended: send the information to sentry.io
