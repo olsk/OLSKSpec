@@ -349,6 +349,18 @@ const mod = {
 	};
 })();
 
+(function OLSKSpecMochaStubs() {
+	Object.entries({
+
+		uRandomInt () {
+			return Math.max(Date.now() % 1000, 1);
+		},
+
+	}).map(function (e) {
+		return global[e.shift()] = e.pop();
+	});
+})();
+
 (function OLSKSpecMochaErrors() {
 	process.on('unhandledRejection', () => {
 		// console.log('Unhandledd Rejection at:', arguments)
