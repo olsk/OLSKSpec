@@ -13,6 +13,9 @@
     "// INTERNATIONAL": null,
     "OLSKInternational": "olsk/OLSKInternational",
 
+    "// STRING": null,
+    "OLSKString": "olsk/OLSKString",
+
     "// ROUTING": null,
     "OLSKRouting": "olsk/OLSKRouting",
 
