@@ -356,8 +356,9 @@ const mod = {
 			return Math.max(Date.now() % 1000, 1);
 		},
 
-		uRandomElement (inputData) {
-			return inputData[Date.now() % inputData.length];
+		uRandomElement () {
+			const array = [].concat(...arguments);
+			return array[Date.now() % array.length];
 		},
 
 	}).map(function (e) {
