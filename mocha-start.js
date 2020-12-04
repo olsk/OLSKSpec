@@ -356,6 +356,10 @@ const mod = {
 			return Math.max(Date.now() % 1000, 1);
 		},
 
+		uRandomElement (inputData) {
+			return inputData[Date.now() % inputData.length];
+		},
+
 	}).map(function (e) {
 		return global[e.shift()] = e.pop();
 	});
