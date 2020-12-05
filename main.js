@@ -117,6 +117,10 @@ if (typeof exports === 'object') {
 			return false;
 		}
 
+		if (typeof window !== 'undefined' && window.location.hostname === 'loc.tests') {
+			return true;
+		}
+
 		return navigator.appName === 'Zombie';
 	};
 }
