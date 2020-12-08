@@ -361,6 +361,12 @@ const mod = {
 			return array[Date.now() % array.length];
 		},
 
+		uSerial (inputData) {
+			return inputData.reduce(async function (coll, e) {
+				return e.then(Array.prototype.concat.bind(await coll));
+			}, Promise.resolve([]));
+		},
+
 	}).map(function (e) {
 		return global[e.shift()] = e.pop();
 	});
