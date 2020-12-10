@@ -31,9 +31,6 @@
     "// COMPLEX FILE WATCHING": null,
     "supervisor": "latest",
 
-    "// MOCHA PREPROCESS": null,
-    "OLSKTesting": "olsk/OLSKTesting",
-
     "// ENV GUARD": null,
     "OLSKEnv": "olsk/OLSKEnv",
     
