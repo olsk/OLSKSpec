@@ -168,11 +168,7 @@ const mod = {
 
 		Browser.extend(function(browser) {
 		  browser.on('request', function(request) {
-		  	if (request.url.match('player.vimeo.com') || request.url.match('w.soundcloud.com')) {
-		  		request.url = 'http://loc.tests';
-		  	}
-
-		    return browser.OLSKRequestCallback ? browser.OLSKRequestCallback(request) : request;
+		  	return browser.OLSKRequestCallback ? browser.OLSKRequestCallback(request) : request;
 		  });
 		});
 		
