@@ -363,7 +363,7 @@ const mod = {
 			}, Promise.resolve([]));
 		},
 
-		uDevariable (inputData) {
+		uCapture (inputData) {
 			const item = [];
 			
 			inputData(item);
