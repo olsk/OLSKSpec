@@ -363,6 +363,14 @@ const mod = {
 			}, Promise.resolve([]));
 		},
 
+		uDevariable (inputData) {
+			const item = [];
+			
+			inputData(item);
+
+			return item;
+		},
+
 	}).map(function (e) {
 		return global[e.shift()] = e.pop();
 	});
