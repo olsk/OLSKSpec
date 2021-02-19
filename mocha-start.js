@@ -366,7 +366,9 @@ const mod = {
 		uCapture (inputData) {
 			const item = [];
 			
-			inputData(item);
+			inputData(function () {
+				item.push(...arguments);
+			});
 
 			return item;
 		},
