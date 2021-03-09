@@ -239,6 +239,10 @@ const mod = {
 		  deepEqual(browser.OLSKAlert(param1), param2);
 		};
 
+		Browser.Assert.prototype.OLSKAlertTextAsync = async function(param1, param2) {
+		  deepEqual(await browser.OLSKAlertAsync(param1), param2);
+		};
+
 		Browser.Assert.prototype.OLSKIsChecked = function(param1, param2) {
 			deepEqual(browser.query(param1).checked, param2);
 		};
