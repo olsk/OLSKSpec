@@ -114,7 +114,7 @@ const mod = {
 			return outputData;
 		};
 
-		Browser.prototype.OLSKAlertTextAsync = function(inputData) {
+		Browser.prototype.OLSKAlertAsync = function(inputData) {
 			const browser = this;
 
 			return new Promise(async function (resolve, reject) {
