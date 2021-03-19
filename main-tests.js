@@ -141,6 +141,12 @@ describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 		]);
 	});
 
+	it('includes *.html', function() {
+		deepEqual(mod.OLSKSpecUISourcePaths(uPath('juliet')), [
+			uPath('juliet/alfa.html'),
+		]);
+	});
+
 });
 
 describe('OLSKSpecMochaPaths', function test_OLSKSpecMochaPaths() {
