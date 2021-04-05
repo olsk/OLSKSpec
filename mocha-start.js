@@ -352,8 +352,8 @@ const mod = {
 (function OLSKSpecMochaStubs() {
 	Object.entries({
 
-		uRandomInt () {
-			return Math.max(Date.now() % 1000, 1);
+		uRandomInt (inputData = 1000) {
+			return Math.max(Date.now() % inputData, 1);
 		},
 
 		uRandomElement () {
