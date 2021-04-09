@@ -377,6 +377,10 @@ const mod = {
 			return item;
 		},
 
+		uLink (inputData) {
+			return 'https://example.com/' + (inputData || Math.random().toString());
+		},
+
 	}).map(function (e) {
 		return global[e.shift()] = e.pop();
 	});
