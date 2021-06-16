@@ -32,6 +32,9 @@ const mod = {
 
 			]), {
 				stdio: 'inherit',
+				env: Object.assign(process.env, {
+					npm_lifecycle_script: 'olsk-spec',
+				}),
 			});
 	},
 
