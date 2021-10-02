@@ -21,7 +21,7 @@ const mod = {
 		require('child_process').spawn(mod.DataMochaPath() || 'mocha', [].concat.apply([], [
 			'**/*-tests.js',
 			'--exclude', '**/+(node_modules|__*)/**',
-			'--watch',
+			args.includes('--ci') ? [] : '--watch',
 			'--file', require('path').join(__dirname, 'mocha-start.js'),
 			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
 			args.includes('--reporter') ? [] : ['--reporter', 'min'],
@@ -35,6 +35,8 @@ const mod = {
 				env: Object.assign(process.env, {
 					npm_lifecycle_script: 'olsk-spec',
 				}),
+			}).on('exit', function (code) {
+				process.exit(code);
 			});
 	},
 
