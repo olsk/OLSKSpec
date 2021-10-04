@@ -41,38 +41,23 @@ const mod = {
 		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd()).filter(OLSKSpec.OLSKSpecUITestPathsFilterFunction(args));
 		const sourcePaths = OLSKSpec.OLSKSpecUISourcePaths(process.cwd());
 
-		require('child_process').spawn('supervisor', [].concat.apply([], [
-			'--watch', sourcePaths.concat(testPaths).join(','),
-			'--extensions', sourcePaths.concat(testPaths).reduce(function (coll, item) {
-				const ext = require('path').extname(item).split('.').pop();
-
-				if (!coll.includes(ext)) {
-					coll.push(ext);
-				};
-				
-				return coll;
-			}, []).join(','),
-			'--no-restart-on', 'exit',
-			'--quiet',
-			'--exec', mod.DataMochaPath() || 'mocha',
-
-			'--',
-
+		require('child_process').spawn(mod.DataMochaPath() || 'mocha', [].concat.apply([], [
 			testPaths,
-			'--file', require('path').join(__dirname, 'mocha-start.js'),
-			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
-			'--timeout', '1000',
-			args.includes('--reporter') ? [] : ['--reporter', 'min'],
+			
+			args.includes('--ci') ? [] : '--watch',
+			'--watch-files', sourcePaths,
 
-			args.length
-			? args
-			: [],
+			'--timeout', '1000',
+
+			OLSKSpec.OLSKSpecMochaStandardConfiguration(args),
 
 			]), {
 				stdio: 'inherit',
-				env: Object.assign({
+				env: Object.assign(process.env, {
 					OLSK_SPEC_MOCHA_INTERFACE: true,
-				}, process.env),
+				}),
+			}).on('exit', function (code) {
+				process.exit(code);
 			});
 	},
 
