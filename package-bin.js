@@ -37,59 +37,10 @@ const mod = {
 
 	ControlInterfaceTests(inputData) {
 		const args = inputData.slice();
-
-		let include = args.filter(function (e) {
-			return e.match(/^-?-?os-match=(.+)/i)
-		}).shift();
-
-		if (include) {
-			args.splice(args.indexOf(include), 1);
-
-			include = include.match(/^-?-?os-match=(.+)/i)[1]
-
-			const regex = include.match(/^\/(.+)\/(.+)?$/);
-
-			if (regex) {
-				include = new RegExp(regex[1], regex[2]);
-			}
-		}
 		
-		let exclude = args.filter(function (e) {
-			return e.match(/^-?-?os-skip=(.+)/i)
-		}).shift();
-
-		if (exclude) {
-			args.splice(args.indexOf(exclude), 1);
-
-			exclude = exclude.match(/^-?-?os-skip=(.+)/i)[1]
-
-			const regex = exclude.match(/^\/(.+)\/(.+)?$/);
-
-			if (regex) {
-				exclude = new RegExp(regex[1], regex[2]);
-			}
-		}
-		
-		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd()).filter(function (e) {
-			if (include && e.match(include)) {
-				return true;
-			}
-			
-			if (exclude && e.match(exclude)) {
-				return false;
-			}
-
-			if (include && !e.match(include)) {
-				return false;
-			}
-			
-			if (exclude && !e.match(exclude)) {
-				return true;
-			}
-			
-			return true;
-		});
+		const testPaths = OLSKSpec.OLSKSpecUITestPaths(process.cwd()).filter(OLSKSpec.OLSKSpecUITestPathsFilterFunction(args));
 		const sourcePaths = OLSKSpec.OLSKSpecUISourcePaths(process.cwd());
+
 		require('child_process').spawn('supervisor', [].concat.apply([], [
 			'--watch', sourcePaths.concat(testPaths).join(','),
 			'--extensions', sourcePaths.concat(testPaths).reduce(function (coll, item) {
