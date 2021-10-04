@@ -20,15 +20,10 @@ const mod = {
 	ControlLogicTests(args) {
 		require('child_process').spawn(mod.DataMochaPath() || 'mocha', [].concat.apply([], [
 			'**/*-tests.js',
-			'--exclude', '**/+(node_modules|__*)/**',
+			
 			args.includes('--ci') ? [] : '--watch',
-			'--file', require('path').join(__dirname, 'mocha-start.js'),
-			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
-			args.includes('--reporter') ? [] : ['--reporter', 'min'],
 
-			args.length
-			? args
-			: [],
+			OLSKSpec.OLSKSpecMochaStandardConfiguration(args),
 
 			]), {
 				stdio: 'inherit',
