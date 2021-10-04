@@ -37,6 +37,66 @@ const mod = {
 		});
 	},
 
+	OLSKSpecUITestPathsFilterFunction (inputData) {
+		if (!Array.isArray(inputData)) {
+			throw new Error('OLSKErrorInputNotValid');
+		}
+
+		const args = inputData.slice();
+
+		let include = args.filter(function (e) {
+			return e.match(/^-?-?os-match=(.+)/i)
+		}).shift();
+
+		if (include) {
+			args.splice(args.indexOf(include), 1);
+
+			include = include.match(/^-?-?os-match=(.+)/i)[1]
+
+			const regex = include.match(/^\/(.+)\/(.+)?$/);
+
+			if (regex) {
+				include = new RegExp(regex[1], regex[2]);
+			}
+		}
+		
+		let exclude = args.filter(function (e) {
+			return e.match(/^-?-?os-skip=(.+)/i)
+		}).shift();
+
+		if (exclude) {
+			args.splice(args.indexOf(exclude), 1);
+
+			exclude = exclude.match(/^-?-?os-skip=(.+)/i)[1]
+
+			const regex = exclude.match(/^\/(.+)\/(.+)?$/);
+
+			if (regex) {
+				exclude = new RegExp(regex[1], regex[2]);
+			}
+		}
+
+		return function (e) {
+			if (include && e.match(include)) {
+				return true;
+			}
+			
+			if (exclude && e.match(exclude)) {
+				return false;
+			}
+
+			if (include && !e.match(include)) {
+				return false;
+			}
+			
+			if (exclude && !e.match(exclude)) {
+				return true;
+			}
+			
+			return true;
+		};
+	},
+
 	OLSKSpecUISourcePaths (inputData) {
 		if (typeof inputData !== 'string') {
 			throw new Error('OLSKErrorInputNotValid');

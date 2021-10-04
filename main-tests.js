@@ -89,6 +89,45 @@ describe('OLSKSpecUITestPaths', function test_OLSKSpecUITestPaths() {
 
 });
 
+describe('OLSKSpecUITestPathsFilterFunction', function test_OLSKSpecUITestPathsFilterFunction() {
+
+	it('throws if not array', function() {
+		throws(function() {
+			mod.OLSKSpecUITestPathsFilterFunction(null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns function', function() {
+		deepEqual(typeof mod.OLSKSpecUITestPathsFilterFunction([]), 'function');
+	});
+
+	it('passes input', function() {
+		const item = Math.random().toString();
+		deepEqual([item].filter(mod.OLSKSpecUITestPathsFilterFunction([])), [item]);
+	});
+
+	it('excludes if matches os-skip', function() {
+		const item = Math.random().toString();
+		deepEqual([item].filter(mod.OLSKSpecUITestPathsFilterFunction([uRandomElement('', '-', '--') + 'os-skip=' + item])), []);
+	});
+
+	it('includes if not matches os-skip', function() {
+		const item = Math.random().toString();
+		deepEqual([item].filter(mod.OLSKSpecUITestPathsFilterFunction([uRandomElement('', '-', '--') + 'os-skip=' + Math.random().toString()])), [item]);
+	});
+
+	it('includes if matches os-match', function() {
+		const item = Math.random().toString();
+		deepEqual([item].filter(mod.OLSKSpecUITestPathsFilterFunction([uRandomElement('', '-', '--') + 'os-match=' + item])), [item]);
+	});
+
+	it('excludes if not matches os-match', function() {
+		const item = Math.random().toString();
+		deepEqual([item].filter(mod.OLSKSpecUITestPathsFilterFunction([uRandomElement('', '-', '--') + 'os-match=' + Math.random().toString()])), []);
+	});
+
+});
+
 describe('OLSKSpecUISourcePaths', function test_OLSKSpecUISourcePaths() {
 
 	it('throws if not string', function() {
