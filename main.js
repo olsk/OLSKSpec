@@ -173,8 +173,8 @@ const mod = {
 		}
 
 		return [].concat.apply([], [
-			'--file', require('path').join(__dirname, 'mocha-start.js'),
-			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
+			'--file', _require('path').join(__dirname, 'mocha-start.js'),
+			_require('fs').existsSync(_require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', _require('path').join(process.cwd(), 'mocha-start.js')] : [],
 			inputData.includes('--reporter') ? [] : ['--reporter', 'min'],
 			inputData.length
 			? inputData
