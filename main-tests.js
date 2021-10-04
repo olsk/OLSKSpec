@@ -194,3 +194,33 @@ describe('OLSKSpecMochaPaths', function test_OLSKSpecMochaPaths() {
 	});
 
 });
+
+describe('OLSKSpecMochaStandardConfiguration', function test_OLSKSpecMochaStandardConfiguration() {
+
+	const shared = [
+		'--file', require('path').join(__dirname, 'mocha-start.js'),
+		'--file', require('path').join(process.cwd(), 'mocha-start.js'),
+		'--reporter', 'min',
+		];
+
+	it('throws if not array', function () {
+		throws(function () {
+			mod.OLSKSpecMochaStandardConfiguration(null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns array', function() {
+		deepEqual(mod.OLSKSpecMochaStandardConfiguration([]), shared);
+	});
+
+	it('appends input', function() {
+		const item = Math.random().toString();
+		deepEqual(mod.OLSKSpecMochaStandardConfiguration([item]), shared.concat(item));
+	});
+
+	it('excludes --reporter if set', function() {
+		const item = ['--reporter']
+		deepEqual(mod.OLSKSpecMochaStandardConfiguration(item), shared.slice(0, -2).concat(item));
+	});
+
+});

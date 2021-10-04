@@ -106,6 +106,21 @@ const mod = {
 
 		return inputData;
 	},
+
+	OLSKSpecMochaStandardConfiguration (inputData) {
+		if (!Array.isArray(inputData)) {
+			throw new Error('OLSKErrorInputNotValid');
+		}
+
+		return [].concat.apply([], [
+			'--file', require('path').join(__dirname, 'mocha-start.js'),
+			require('fs').existsSync(require('path').join(process.cwd(), 'mocha-start.js')) ? ['--file', require('path').join(process.cwd(), 'mocha-start.js')] : [],
+			inputData.includes('--reporter') ? [] : ['--reporter', 'min'],
+			inputData.length
+			? inputData
+			: [],
+		]);
+	},
 	
 };
 
