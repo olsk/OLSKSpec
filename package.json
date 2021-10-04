@@ -28,9 +28,6 @@
     "// BROWSER TESTING": null,
     "zombie": "latest",
 
-    "// COMPLEX FILE WATCHING": null,
-    "supervisor": "latest",
-
     "// ENV GUARD": null,
     "OLSKEnv": "olsk/OLSKEnv",
     
