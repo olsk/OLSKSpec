@@ -45,7 +45,7 @@ const mod = {
 			testPaths,
 			
 			args.includes('--ci') ? [] : '--watch',
-			'--watch-files', sourcePaths.join(','),
+			'--watch-files', testPaths.concat(sourcePaths).join(','),
 
 			'--timeout', '1000',
 
