@@ -55,6 +55,7 @@ const mod = {
 				stdio: 'inherit',
 				env: Object.assign(process.env, {
 					OLSK_SPEC_MOCHA_INTERFACE: true,
+					OLSK_SPEC_CI: args.includes('--ci'),
 				}),
 			}).on('exit', function (code) {
 				process.exit(code);
