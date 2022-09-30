@@ -6,29 +6,29 @@
     "olsk-spec-ui": "./package-bin.js"
   },
   "dependencies": {
-    "// FILE ACCESS": null,
+    "//": "FILE ACCESS",
     "OLSKDisk": "olsk/OLSKDisk",
     "glob": "latest",
 
-    "// INTERNATIONAL": null,
+    "//": "INTERNATIONAL",
     "OLSKInternational": "olsk/OLSKInternational",
 
-    "// STRING": null,
+    "//": "STRING",
     "OLSKString": "olsk/OLSKString",
 
-    "// ROUTING": null,
+    "//": "ROUTING",
     "OLSKRouting": "olsk/OLSKRouting",
 
-    "// .ENV": null,
+    "//": ".ENV",
     "dotenv": "latest",
 
-    "// DSL": null,
+    "//": "DSL",
     "mocha": "7.x",
     
-    "// BROWSER TESTING": null,
+    "//": "BROWSER TESTING",
     "zombie": "latest",
 
-    "// ENV GUARD": null,
+    "//": "ENV GUARD",
     "OLSKEnv": "olsk/OLSKEnv",
     
     "//": "I sacrifice myself for the commas of others"
