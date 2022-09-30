@@ -6,29 +6,21 @@
     "olsk-spec-ui": "./package-bin.js"
   },
   "dependencies": {
-    "//": "FILE ACCESS",
     "OLSKDisk": "olsk/OLSKDisk",
     "glob": "latest",
 
-    "//": "INTERNATIONAL",
     "OLSKInternational": "olsk/OLSKInternational",
 
-    "//": "STRING",
     "OLSKString": "olsk/OLSKString",
 
-    "//": "ROUTING",
     "OLSKRouting": "olsk/OLSKRouting",
 
-    "//": ".ENV",
     "dotenv": "latest",
 
-    "//": "DSL",
     "mocha": "7.x",
     
-    "//": "BROWSER TESTING",
     "zombie": "latest",
 
-    "//": "ENV GUARD",
     "OLSKEnv": "olsk/OLSKEnv"
   }
 }
