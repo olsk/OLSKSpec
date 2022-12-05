@@ -382,6 +382,10 @@ const mod = {
 			return 'https://example.com/' + (inputData || Math.random().toString());
 		},
 
+		uEmail (inputData) {
+			return (inputData || Math.random().toString()) + '@example.com';
+		},
+
 	}).map(function (e) {
 		return global[e.shift()] = e.pop();
 	});
