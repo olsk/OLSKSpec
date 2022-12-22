@@ -20,6 +20,8 @@ const mod = {
 	ControlLogicTests(args) {
 		require('child_process').spawn(mod.DataMochaPath() || 'mocha', [].concat.apply([], [
 			'**/*-tests.js',
+
+			'--ignore', '**/node_modules/**',
 			
 			args.includes('--ci') ? [] : '--watch',
 
