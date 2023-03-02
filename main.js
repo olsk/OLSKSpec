@@ -29,7 +29,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return _require('glob').sync('**/ui-test-*.js', {
+		return _require('glob').globSync('**/ui-test-*.js', {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
@@ -106,7 +106,7 @@ const mod = {
 			throw new Error('OLSKErrorInputNotValid');
 		}
 
-		return _require('glob').sync('**/+(ui-behaviour.js|*.ejs|*.md|*.html|*.hbs)', {
+		return _require('glob').globSync('**/+(ui-behaviour.js|*.ejs|*.md|*.html|*.hbs)', {
 			cwd: inputData,
 			realpath: true,
 		}).filter(function (e) {
