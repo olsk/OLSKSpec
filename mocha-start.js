@@ -378,6 +378,16 @@ const mod = {
 			return item;
 		},
 
+		async uCaptureAsync (inputData) {
+			const item = [];
+			
+			await inputData(function () {
+				item.push(...arguments);
+			});
+
+			return item;
+		},
+
 		uLink (inputData) {
 			return 'https://example.com/' + (inputData || Math.random().toString());
 		},
