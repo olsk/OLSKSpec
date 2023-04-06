@@ -31,7 +31,7 @@ const mod = {
 
 		return _require('glob').globSync('**/ui-test-*.js', {
 			cwd: inputData,
-			realpath: true,
+			absolute: true,
 		}).filter(function (e) {
 			return !e.match(_require('OLSKDisk').OLSKDiskStandardIgnorePattern());
 		});
@@ -108,7 +108,7 @@ const mod = {
 
 		return _require('glob').globSync('**/+(ui-behaviour.js|*.ejs|*.md|*.html|*.hbs)', {
 			cwd: inputData,
-			realpath: true,
+			absolute: true,
 		}).filter(function (e) {
 			if (e.match('__compiled')) {
 				return true;
