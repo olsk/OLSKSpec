@@ -18,6 +18,7 @@
     "dotenv": "latest",
 
     "mocha": "7.x",
+    "sinon": "latest",
     
     "zombie": "latest",
 

@@ -351,6 +351,9 @@ const mod = {
 })();
 
 (function OLSKSpecMochaStubs() {
+	global.sinon = require('sinon');
+	afterEach(() => sinon.restore());
+
 	Object.entries({
 
 		uRandomInt (inputData = 1000) {
