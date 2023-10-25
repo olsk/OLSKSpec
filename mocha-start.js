@@ -1,4 +1,4 @@
-const { deepEqual } = require('assert');
+const { throws, rejects, deepEqual } = require('assert');
 
 const mod = {
 
@@ -211,6 +211,10 @@ const mod = {
 			return this.visit(global.OLSKTestingCanonical(routeObject, params));
 		};
 
+		Browser.prototype.innerHTML = function(selector) {
+			return this.query(selector).innerHTML;
+		};
+
 		Browser.Assert.prototype.OLSKTextContent = function(param1, param2, param3 = function (inputData) { return inputData; }) {
 		  deepEqual(param3(browser.query(param1).textContent.trim()), param2);
 		};
@@ -251,6 +255,10 @@ const mod = {
 			deepEqual(param1, param2);
 		};
 
+		Browser.Assert.prototype.visible = function(selector) {
+			browser.assert.elements(selector, 1);
+		};
+
 		Browser.Assert.prototype.OLSKLauncherItems = async function(param1, param2) {
 			await browser.pressButton('.OLSKAppToolbarLauncherButton');
 			await browser.fill('.LCHLauncherFilterInput', param1);
@@ -274,7 +282,103 @@ const mod = {
 
 };
 
+(function OLSKSpecPlaywright() {
+	if (process.env.OLSK_SPEC_PLAYWRIGHT !== 'true') {
+		return;
+	}
+	
+	const { chromium, expect } = require('@playwright/test');
+
+	global.expect = expect;
+	global.browser = {
+		OLSKVisit: (function () {
+			return global.OSVisit(...arguments);
+		}),
+		html: (function () {
+			return page.locator('body').innerHTML();
+		}),
+		innerHTML: (function (selector) {
+			return page.locator(selector).innerHTML();
+		}),
+		pressButton: ((selector) => page.locator(selector).click()),
+		click: ((selector) => page.locator(selector).click()),
+		fill: ((selector, value) => page.locator(selector).fill(value.toString())),
+		fire: ((selector, event) => page.locator(selector).dispatchEvent(event)),
+		evaluate: ((code) => page.evaluate(code)),
+		OLSKFireKeyboardEvent: ((ignored, key, options = {}) => page.keyboard.press((function() {
+			if (options.altKey) {
+				return 'Alt+';
+			}
+
+			return '';
+		})() + key)),
+		OLSKAlertAsync: (function(callback) {
+			return new Promise(function (res, rej) {
+				page.once('dialog', dialog => {
+					res(dialog.message());
+
+				  return dialog.dismiss();
+				});
+
+				callback();
+			});
+		}),
+		assert: {
+			deepEqual,
+			visible: ((selector) => expect(page.locator(selector)).toBeVisible()),
+			text: ((selector, text) => expect(page.locator(selector)).toHaveText(text)),
+			attribute: ((selector, attribute, value) => value !== null ? expect(page.locator(selector)).toHaveAttribute(attribute, value.toString()) : expect(page.locator(selector)).not.toHaveAttribute(attribute, '')),
+			input: ((selector, value) => expect(page.locator(selector)).toHaveValue(value)),
+			elements: ((selector, count) => expect(page.locator(selector)).toHaveCount(count)),
+			hasClass: ((selector, name) => expect(page.locator(selector)).toHaveClass(new RegExp(name))),
+			hasNoClass: ((selector, name) => expect(page.locator(selector)).not.toHaveClass(new RegExp(name))),
+			hasFocus: ((selector) => expect(page.locator(selector)).toBeFocused()),
+			OLSKInnerHTML: (async (selector, html) => expect(await page.locator(selector).innerHTML()).toEqual(html)),
+			OLSKConfirmQuestion: (async (param1, param2) => deepEqual(await browser.OLSKAlertAsync(param1), param2)),
+			OLSKPromptQuestion: ((param1, param2) => browser.assert.OLSKConfirmQuestion(param1, param2)),
+			async OLSKLauncherItemText (param1, param2) {
+				await browser.pressButton('.OLSKAppToolbarLauncherButton');
+				await browser.fill('.LCHLauncherFilterInput', param1);
+				await browser.assert.text('.LCHLauncherPipeItem', param2);
+				await browser.pressButton('#TestLCHDebugCloseButton');
+			},
+			async OLSKLauncherItems (param1, param2) {
+				await browser.pressButton('.OLSKAppToolbarLauncherButton');
+				await browser.fill('.LCHLauncherFilterInput', param1);
+				await browser.assert.elements('.LCHLauncherPipeItem', param2);
+				await browser.pressButton('#TestLCHDebugCloseButton');
+			},
+		},
+	};
+	
+	before(async () => {
+		global.playwrightBrowser = await chromium.launch();
+		global.page = await playwrightBrowser.newPage();
+
+		global.OSVisit = async function (routeObject, params) {
+			await global.page.close();
+			global.page = await playwrightBrowser.newPage();
+			await global.page.addInitScript({ content: "window.OLSK_SPEC_UI = true" });
+
+			await page.route(/^https/i, route => route.abort());
+
+			const baseURL = 'http://' + (process.env.HOST || 'localhost') + ':' + (process.env.PORT || 3000);
+			const isFile = routeObject.toString().match(/^file:\/\//i);
+
+			await page.goto(browser.url = (isFile ? '' : baseURL) + global.OLSKTestingCanonical(isFile ? {
+				OLSKRoutePath: routeObject,
+			} : routeObject, params));
+		};
+	});
+
+	after(() => global.playwrightBrowser.close());
+})();
+
 (function OLSKSpecZombie() {
+	if (process.env.OLSK_SPEC_PLAYWRIGHT === 'true') {
+		return;
+	}
+	
 	if (process.env.OLSK_SPEC_MOCHA_INTERFACE !== 'true') {
 		return;
 	}
@@ -351,10 +455,16 @@ const mod = {
 })();
 
 (function OLSKSpecMochaStubs() {
-	global.sinon = require('sinon');
+	const sinon = require('sinon');
+	
 	afterEach(() => sinon.restore());
 
 	Object.entries({
+		sinon,
+
+		deepEqual,
+		throws,
+		rejects,
 
 		uRandomInt (inputData = 1000) {
 			return Math.max(Date.now() % inputData, 1);
@@ -363,6 +473,14 @@ const mod = {
 		uRandomElement () {
 			const array = [].concat(...arguments);
 			return array[Date.now() % array.length];
+		},
+
+		uRandomize (inputData) {
+			const array = [].concat(...arguments);
+		  return array
+		    .map(value => ({ value, sort: Math.random() }))
+		    .sort((a, b) => a.sort - b.sort)
+		    .map(({ value }) => value);
 		},
 
 		uSerial (inputData) {

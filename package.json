@@ -5,6 +5,9 @@
     "olsk-spec": "./package-bin.js",
     "olsk-spec-ui": "./package-bin.js"
   },
+  "scripts": {
+    "postinstall": "npx playwright install chromium"
+  },
   "dependencies": {
     "OLSKDisk": "olsk/OLSKDisk",
     "glob": "latest",
@@ -21,6 +24,7 @@
     "sinon": "latest",
     
     "zombie": "latest",
+    "@playwright/test": "latest",
 
     "OLSKEnv": "olsk/OLSKEnv"
   }
