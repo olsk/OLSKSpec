@@ -21,7 +21,8 @@ const mod = {
 		require('child_process').spawn(mod.DataMochaPath() || 'mocha', [].concat.apply([], [
 			'**/*-tests.js',
 
-			'--ignore', '**/node_modules/**',
+			'--ignore', '**/node_modules/**', 
+			'--ignore', '**/__*/**',
 			
 			args.includes('--ci') ? [] : '--watch',
 
