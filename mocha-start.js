@@ -294,6 +294,11 @@ const mod = {
 		OLSKVisit: (function () {
 			return global.OSVisit(...arguments);
 		}),
+		OLSKVisitPath: (function (OLSKRoutePath, params) {
+			return global.OSVisit({
+				OLSKRoutePath,
+			}, params);
+		}),
 		html: (function () {
 			return page.locator('body').innerHTML();
 		}),
