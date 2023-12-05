@@ -349,6 +349,18 @@ const mod = {
 				callback();
 			});
 		},
+		OLSKAlertText (callback) {
+			return new Promise(function (res, rej) {
+				page.once('dialog', dialog => {
+
+					res(dialog.message());
+
+					return dialog.dismiss();
+				});
+
+				callback();
+			});
+		},
 		assert: {
 			deepEqual,
 			visible: ((selector) => expect(page.locator(selector)).toBeVisible()),
