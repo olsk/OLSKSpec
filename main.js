@@ -196,6 +196,10 @@ if (typeof exports === 'object') {
 			return true;
 		}
 
+		if (navigator.userAgent.includes('HeadlessChrome')) {
+			return true;
+		}
+
 		return navigator.appName === 'Zombie';
 	};
 }
