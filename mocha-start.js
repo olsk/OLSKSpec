@@ -335,6 +335,20 @@ const mod = {
 				callback();
 			});
 		}),
+		OLSKConfirm (callback, handle) {
+			return new Promise(function (res, rej) {
+				page.once('dialog', dialog => {
+
+					res(dialog.message());
+
+					return handle({
+						response: true,
+					}).response ? dialog.accept() : dialog.dismiss();
+				});
+
+				callback();
+			});
+		},
 		assert: {
 			deepEqual,
 			visible: ((selector) => expect(page.locator(selector)).toBeVisible()),
