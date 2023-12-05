@@ -310,6 +310,13 @@ const mod = {
 		fill: ((selector, value) => page.locator(selector).fill(value.toString())),
 		fire: ((selector, event) => page.locator(selector).dispatchEvent(event)),
 		evaluate: ((code) => page.evaluate(code)),
+		fetch: (async function (url, options = {}) {
+			if (options.headers) {
+				options.headers = Object.fromEntries(options.headers);
+			}
+			
+			return (await global.playwrightBrowser.newContext()).request.get(...arguments);
+		}),
 		OLSKFireKeyboardEvent: ((ignored, key, options = {}) => page.keyboard.press((function() {
 			if (options.altKey) {
 				return 'Alt+';
