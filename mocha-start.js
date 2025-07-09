@@ -283,6 +283,10 @@ const mod = {
 };
 
 (function OLSKSpecPlaywright() {
+	if (!process.env.OLSK_SPEC_MOCHA_INTERFACE) {
+		return;
+	}
+
 	if (process.env.OLSK_SPEC_PLAYWRIGHT !== 'true') {
 		return;
 	}
