@@ -24,7 +24,7 @@
     "sinon": "latest",
     
     "zombie": "latest",
-    "@playwright/test": "latest",
+    "@playwright/test": "1.2.5",
 
     "OLSKEnv": "olsk/OLSKEnv"
   }
