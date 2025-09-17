@@ -4,3 +4,6 @@ package-lock.json
 
 # BUILD
 **/__*/*
+
+# OS
+**/*.DS_Store
